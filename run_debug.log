@@ -1,0 +1,20 @@
+2019-11-14 18:30:53,762 root transfer_md.py[line:89] _loads_file DEBUG xml file to abs pname done, count file: 1
+2019-11-14 18:30:53,763 root transfer_md.py[line:94] start_work DEBUG /Users/presley/Desktop/codes/presleyren.github.io/TOMc/xml_data/CNBlogs_BlogBackup.xml not exists
+2019-11-14 18:30:53,763 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 0.0008513927459716797 
+post total: 0, to md result: 
+success: 0, faild: 0
+2019-11-14 18:31:44,666 root transfer_md.py[line:89] _loads_file DEBUG xml file to abs pname done, count file: 1
+2019-11-14 18:31:44,788 root transfer_md.py[line:104] gen_md_file DEBUG find post total: 151
+2019-11-14 18:31:46,428 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 1.7626209259033203 
+post total: 151, to md result: 
+success: 151, faild: 0
+2019-11-14 18:34:05,600 root transfer_md.py[line:89] _loads_file DEBUG xml file to abs pname done, count file: 1
+2019-11-14 18:34:05,728 root transfer_md.py[line:104] gen_md_file DEBUG find post total: 152
+2019-11-14 18:34:07,777 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 2.176659107208252 
+post total: 152, to md result: 
+success: 152, faild: 0
+2019-11-15 10:18:57,997 root transfer_md.py[line:89] _loads_file DEBUG xml file to abs pname done, count file: 1
+2019-11-15 10:18:58,129 root transfer_md.py[line:104] gen_md_file DEBUG find post total: 152
+2019-11-15 10:19:00,115 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 2.1174850463867188 
+post total: 152, to md result: 
+success: 152, faild: 0
