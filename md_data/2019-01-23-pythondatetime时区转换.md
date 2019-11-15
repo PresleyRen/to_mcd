@@ -4,7 +4,7 @@ title:      pythondatetime时区转换
 subtitle:   
 date:       2019-01-23
 author:     P
-header-img: img/post-bg-swift2.jpg
+header-img: img/post-bg-alibaba.jpg
 catalog: true
 tags:
     - python
@@ -28,6 +28,7 @@ From: http://www.dannysite.com/blog/122/
 
 在Python中转换时区的方法还有很多，通过探索也许还能找到更好的方法。
 
+{% raw %}
 ```
 from pytz import timezone
 
@@ -41,3 +42,4 @@ def datetime_to_str(date_time):
     date_time_tzone = datetime_as_timezone(date_time, 'Asia/Shanghai')
     return '{0:%Y-%m-%d %H:%M}'.format(date_time_tzone)
 ```
+{% endraw %}

@@ -4,7 +4,7 @@ title:      Djangocontenttypes组件
 subtitle:   
 date:       2019-01-22
 author:     P
-header-img: img/post-bg-js-version.jpg
+header-img: img/post-bg-ios10.jpg
 catalog: true
 tags:
     - python
@@ -17,6 +17,7 @@ tags:
 
 我们在网上po一段散文诗也可以po一张旅途的风景图，文字可以被评论，图片也可以被评论。我们需要在数据库中建表存储这些数据，我们可能会设计出下面这样的表结构。
 
+{% raw %}
 ```
 class Post(models.Model):
     """帖子表"""
@@ -37,6 +38,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE)
     picture = models.ForeignKey(Picture, null=True, blank=True, on_delete=models.CASCADE)
 ```
+{% endraw %}
 
 这表结构看起来不太简洁，我们画个图来看一下：
 
@@ -54,6 +56,7 @@ class Comment(models.Model):
 
 <img src="https://img2018.cnblogs.com/blog/867021/201901/867021-20190116164158244-1452668666.png" alt="" />
 
+{% raw %}
 ```
 class Comment(models.Model):
     """评论表"""
@@ -64,9 +67,11 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField()  # 关联数据的主键
     content_object = GenericForeignKey('content_type', 'object_id')
 ```
+{% endraw %}
 
 ## contenttypes使用
 
+{% raw %}
 ```
 import os
 
@@ -96,11 +101,15 @@ if __name__ == "__main__":
     # 给图片创建评论数据
     comment_2 = Comment.objects.create(author=user_2, content='好美！', content_object=picture_1)
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.contrib.contenttypes.fields import GenericRelation
 ```
+{% endraw %}
 
+{% raw %}
 ```
 class Post(models.Model):
     """帖子表"""
@@ -117,18 +126,25 @@ class Picture(models.Model):
 
     comments = GenericRelation('Comment')  # 支持反向查找评论数据（不会在数据库中创建字段）
 ```
+{% endraw %}
 
+{% raw %}
 ```
 class Comment(models.Model):    """评论"""    info = models.TextField()    # talk = models.ForeignKey(to='Talk', null=True, on_delete=models.CASCADE)    # picture = models.ForeignKey(to='Picture', null=True, on_delete=models.CASCADE)    # 关联表的表名（外键 --> Django Content Type表）    table_name = models.ForeignKey(to=ContentType)    # 关联表中具体的数据id    obj_id = models.IntegerField()    # 告诉Django table_name和obj_id是一组动态关联的数据    content_object = GenericForeignKey('table_name', 'obj_id')
 ```
+{% endraw %}
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 查询示例：
 
+{% raw %}
 ```
 post_1 = Post.objects.filter(id=1).first()
 comment_list = post_1.comments.all()
 ```
+{% endraw %}

@@ -4,7 +4,7 @@ title:      CookiandSession
 subtitle:   
 date:       2019-01-22
 author:     P
-header-img: img/post-bg-os-metro.jpg
+header-img: img/post-bg-rwd.jpg
 catalog: true
 tags:
     - python
@@ -58,10 +58,12 @@ cookie的工作原理是：由服务器产生内容，浏览器收到请求后�
 
 ### 获取Cookie
 
+{% raw %}
 ```
 request.COOKIES['key']
 request.get_signed_cookie('key', default=RAISE_ERROR, salt='', max_age=None)
 ```
+{% endraw %}
 
 get_signed_cookie方法的参数：
 
@@ -71,6 +73,7 @@ get_signed_cookie方法的参数：
 
 ### 设置Cookie
 
+{% raw %}
 ```
 rep = HttpResponse(...)
 rep ＝ render(request, ...)
@@ -78,6 +81,7 @@ rep ＝ render(request, ...)
 rep.set_cookie(key,value,...)
 rep.set_signed_cookie(key,value,salt='加密盐',...)
 ```
+{% endraw %}
 
 参数：
 
@@ -92,15 +96,18 @@ rep.set_signed_cookie(key,value,salt='加密盐',...)
 
 ### 删除Cookie
 
+{% raw %}
 ```
 def logout(request):
     rep = redirect("/login/")
     rep.delete_cookie("user")  # 删除用户浏览器上之前设置的user的cookie值
     return rep
 ```
+{% endraw %}
 
 Cookie版登陆校验
 
+{% raw %}
 ```
 def check_login(func):
     @wraps(func)
@@ -129,6 +136,7 @@ def login(request):
             return response
     return render(request, "login.html")
 ```
+{% endraw %}
 
 ## Session
 
@@ -146,6 +154,7 @@ Cookie虽然在一定程度上解决了保持状态的需求，但是由于Cooki
 
 ## Django中Session相关方法
 
+{% raw %}
 ```
 # 获取、设置、删除Session中数据
 request.session['k1']
@@ -187,6 +196,7 @@ request.session.set_expiry(value)
     * 如果value是0,用户关闭浏览器session就会失效。
     * 如果value是None,session会依赖全局session失效策略。
 ```
+{% endraw %}
 
 ### Session流程解析
 
@@ -194,6 +204,7 @@ request.session.set_expiry(value)
 
 ### Session版登陆验证
 
+{% raw %}
 ```
 from functools import wraps
 
@@ -240,11 +251,13 @@ def index(request):
     current_user = request.session.get("user", None)
     return render(request, "index.html", {"user": current_user})
 ```
+{% endraw %}
 
 ### Django中的Session配置
 
 Django中默认支持Session，其内部提供了5种类型的Session供开发者使用。
 
+{% raw %}
 ```
 1. 数据库Session
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'   # 引擎（默认）
@@ -273,3 +286,4 @@ SESSION_COOKIE_AGE = 1209600                             # Session的cookie失�
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  # 是否关闭浏览器使得Session过期（默认）
 SESSION_SAVE_EVERY_REQUEST = False                       # 是否每次请求都保存Session，默认修改之后才保存（默认）
 ```
+{% endraw %}

@@ -4,7 +4,7 @@ title:      Python网络爬虫第二弹《http和https协议》
 subtitle:   
 date:       2019-04-12
 author:     P
-header-img: img/post-bg-debug.png
+header-img: img/post-bg-mma-2.jpg
 catalog: true
 tags:
     - python

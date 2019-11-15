@@ -4,7 +4,7 @@ title:      Flask-Script
 subtitle:   
 date:       2019-04-11
 author:     P
-header-img: img/post-sample-image.jpg
+header-img: img/post-bg-unix-linux.jpg
 catalog: true
 tags:
     - python
@@ -19,12 +19,15 @@ Flask-Script 从字面意思上来看就是 Flask 的脚本
 
 ### 1.安装 Flask-Script
 
+{% raw %}
 ```
 pip install Flask-Script
 ```
+{% endraw %}
 
 ### 2.将 Flask-Script 加入到 Flask 项目中
 
+{% raw %}
 ```
  1 import MyApp
  2 # 导入 Flask-Script 中的 Manager
@@ -39,20 +42,25 @@ pip install Flask-Script
 11     # 替换原有的app.run(),然后大功告成了
 12     manager.run()
 ```
+{% endraw %}
 
 ### 3.使用命令启动 Flask 项目
 
+{% raw %}
 ```
 python manager.py runserver
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1122946/201902/1122946-20190212163434616-849307789.png" alt="" />
 
 ### 4.启动项目并更改配置参数(监听IP地址,监听端口)
 
+{% raw %}
 ```
 python manager.py runserver -h 0.0.0.0 -p 9527
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1122946/201902/1122946-20190212163635071-724007567.png" alt="" />
 
@@ -60,6 +68,7 @@ python manager.py runserver -h 0.0.0.0 -p 9527
 
 5.1.方式一 : @manager.command
 
+{% raw %}
 ```
  1 import MyApp
  2 # 导入 Flask-Script 中的 Manager
@@ -78,15 +87,19 @@ python manager.py runserver -h 0.0.0.0 -p 9527
 15     # 替换原有的app.run(),然后大功告成了
 16     manager.run()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 python manager.py DragonFire 666
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1122946/201902/1122946-20190212164132650-1912565267.png" alt="" />
 
 5.2.方式二 : @manager.opation("-短指令","--长指令",dest="变量名")
 
+{% raw %}
 ```
  1 import MyApp
  2 # 导入 Flask-Script 中的 Manager
@@ -110,11 +123,14 @@ python manager.py DragonFire 666
 20     # 替换原有的app.run(),然后大功告成了
 21     manager.run()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 python manager.py talk -n 赵丽颖 -s 漂亮
 python manager.py talk --name DragonFire --say NB-Class
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1122946/201902/1122946-20190212164705293-1525668161.png" alt="" />
 

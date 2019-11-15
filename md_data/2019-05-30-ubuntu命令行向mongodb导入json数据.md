@@ -4,7 +4,7 @@ title:      ubuntu命令行向mongodb导入json数据
 subtitle:   
 date:       2019-05-30
 author:     P
-header-img: img/post-bg-map.jpg
+header-img: img/post-bg-js-version.jpg
 catalog: true
 tags:
     - python
@@ -29,12 +29,14 @@ tags:
 
 一个示例json文档如下所示：
 
+{% raw %}
 ```
 {"address":[
     {"building":"1007", "street":"Park Ave"},
     {"building":"1008", "street":"New Ave"},
 ]}
 ```
+{% endraw %}
 
 Json使用非常方便，但它不支持bson中可用的所有数据类型。这意味着如果使用json，将会出现所谓的保真度丢失。这就是备份/恢复的原因，最好使用能够更好地恢复MongoDB数据库的二进制bson。
 
@@ -48,47 +50,60 @@ Json使用非常方便，但它不支持bson中可用的所有数据类型。这
 
 要了解如何将信息导入MongoDB，我们可以使用一个关于餐馆的流行示例MongoDB数据库。它是.json格式，可以使用`wget`以下方式下载：
 
+{% raw %}
 ```
 wget https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
 ```
+{% endraw %}
 
 下载完成后，您应该在当前目录中有一个名为`primer-dataset.json`（12 MB大小）的文件。让我们将这个文件中的数据导入一个名为`newdb`的新数据库，并进入一个名为`restaurants`的集合。对于导入，我们将使用如下命令`mongoimport`：
 
+{% raw %}
 ```
 sudo mongoimport --db newdb --collection restaurants --file primer-dataset.jsonmongoimport -d expedia -c hotel_info --file 文件名.json-d 指哪个database-c 哪个table/collection
 ```
+{% endraw %}
 
 结果应如下所示：
 
+{% raw %}
 ```
 2016-01-17T14:27:04.806-0500    connected to: localhost
 2016-01-17T14:27:07.315-0500    imported 25359 documents
 ```
+{% endraw %}
 
 如上面的命令所示，已导入25359个文档。因为我们没有调用`newdb`数据库，所以MongoDB会自动创建它。
 
 让我们通过连接到这样调用的新创建的名为`newdb`的MongoDB数据库来验证导入：
 
+{% raw %}
 ```
 sudo mongo newdb
 ```
+{% endraw %}
 
 您现在已连接到新创建的`newdb`数据库实例。请注意，您的提示已更改，表明您已连接到数据库。
 
 使用以下命令计算restaurants集合中的文档：
 
+{% raw %}
 ```
 db.restaurants.count()
 ```
+{% endraw %}
 
 结果应该显示`25359`，正好是导入文档的数量。为了更好的检查，您可以从餐馆集合中选择第一个文档，如下所示：
 
+{% raw %}
 ```
 db.restaurants.findOne() 
 ```
+{% endraw %}
 
 结果应如下所示：
 
+{% raw %}
 ```
 {
         "_id" : ObjectId("569beb098106480d3ed99926"),
@@ -115,14 +130,17 @@ db.restaurants.findOne()
         "restaurant_id" : "30075445"
 }
 ```
+{% endraw %}
 
 这样详细的检查可以揭示文档的问题，例如它们的内容，编码等.json格式使用`UTF-8`编码，您的导出和导入应该在该编码中。如果您手动编辑json文件，请记住这一点。否则，MongoDB会自动为您处理。
 
 要退出MongoDB提示，请在提示符处键入`exit`：
 
+{% raw %}
 ```
 exit
 ```
+{% endraw %}
 
 您将以非root用户身份返回到正常的命令行提示符。
 
@@ -134,38 +152,48 @@ exit
 
 一个简单的`mongoexport`例子是从我们之前导入的`newdb`数据库中导出餐馆集合。它可以这样做：
 
+{% raw %}
 ```
 sudo mongoexport --db newdb -c restaurants --out newdbexport.json
 ```
+{% endraw %}
 
 在上面的命令中，我们用`--db`来指定数据库，`-c`集合以及`--out`文件里的数据将被保存。
 
 成功的输出`mongoexport`应如下所示：
 
+{% raw %}
 ```
 2016-01-20T03:39:00.143-0500    connected to: localhost
 2016-01-20T03:39:03.145-0500    exported 25359 records
 ```
+{% endraw %}
 
 上面的输出显示已导入25359个文档 - 与导入的文档数相同。
 
 在某些情况下，您可能只需要导出集合的一部分。考虑到餐馆json文件的结构和内容，让我们出口所有符合标准的餐厅，位于布朗克斯区，并有中国菜。如果我们想在连接到MongoDB时直接获取此信息，请再次连接到数据库：
 
+{% raw %}
 ```
 sudo mongo newdb
 ```
+{% endraw %}
 
 然后，使用此查询：
 
+{% raw %}
 ```
 db.restaurants.find( { borough: "Bronx", cuisine: "Chinese" } )
 ```
+{% endraw %}
 
 结果显示在终端上。要退出MongoDB提示，请`exit`在提示符处键入：
 
+{% raw %}
 ```
 exit
 ```
+{% endraw %}
 
 如果要从sudo命令行而不是在连接到数据库时导出数据，请`mongoexport`通过为`-q`参数指定前面的查询部分，如下所示：
 
@@ -179,10 +207,12 @@ mongoexport -h 数据库所在主机地址（若是本地则为127.0.0.1，若�
 
 如果导出成功，结果应如下所示：
 
+{% raw %}
 ```
 2016-01-20T04:16:28.381-0500    connected to: localhost
 2016-01-20T04:16:28.461-0500    exported 323 records
 ```
+{% endraw %}
 
 以上显示已导出323条记录，您可以在我们指定的`Bronx_Chinese_retaurants.json`文件中找到它们。
 

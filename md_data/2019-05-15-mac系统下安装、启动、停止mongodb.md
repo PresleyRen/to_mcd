@@ -4,7 +4,7 @@ title:      mac系统下安装、启动、停止mongodb
 subtitle:   
 date:       2019-05-15
 author:     P
-header-img: img/post-bg-github-cup.jpg
+header-img: img/post-bg-ios9-web.jpg
 catalog: true
 tags:
     - python
@@ -33,6 +33,7 @@ tags:
 
 mongod.conf 内容如下
 
+{% raw %}
 ```
 #mongodb config file
 dbpath=/Users/wangxi/Documents/mongodb/data/db/
@@ -42,6 +43,7 @@ port = 27017
 fork = true
 auth = true
 ```
+{% endraw %}
 
 这个主要是用来配置数据库位置，和错误输出的文件位置。
 
@@ -55,9 +57,11 @@ auth = true
 
 首先添加PATH：
 
+{% raw %}
 ```
 echo 'export PATH=/Users/wangxi/Documents/develop/mongodb/bin:$PATH'>>~/.bash_profile 
 ```
+{% endraw %}
 
 如下
 
@@ -69,9 +73,11 @@ echo 'export PATH=/Users/wangxi/Documents/develop/mongodb/bin:$PATH'>>~/.bash_pr
 
 查看环境变量是否添加成功：
 
+{% raw %}
 ```
 echo $PATH
 ```
+{% endraw %}
 
 如下：
 
@@ -83,17 +89,21 @@ echo $PATH
 
 　　新建立的data/db 通过查看是否与读写权限，如果没有的话需要添加读写权限
 
+{% raw %}
 ```
 sudo chown -R  用户名 /data/db
 ```
+{% endraw %}
 
 <img src="https://images2017.cnblogs.com/blog/1086124/201801/1086124-20180106131924409-2045152874.png" alt="" />
 
 **　　如何检测安装成功了呢：在控制台输入**
 
+{% raw %}
 ```
 which mongod
 ```
+{% endraw %}
 
 会出现一个路径就代表安装成功了
 
@@ -115,10 +125,12 @@ It looks like you are trying to access MongoDB over HTTP on the native driver po
 
 ###### **六.要停止mongodb一定要正确的退出,不然下次再次连接数据库会出现问题.**
 
+{% raw %}
 ```
 use admin;
 db.shutdownServer();
 ```
+{% endraw %}
 
 　　**备注：如果安装成功后，以后只需要启动MongoDB服务，然后金操作数据库就行了。就相当于只需要执行上边的 5 和 6 步骤就可以了。**
 
@@ -128,6 +140,7 @@ db.shutdownServer();
 
 一、启动[Mac下安装mongoldb 报错 shutting down with code:100](http://blog.csdn.net/u013939918/article/details/78200946)。
 
+{% raw %}
 ```
 具体错误栈：
 
@@ -148,11 +161,13 @@ db.shutdownServer();
 2017-10-11T09:31:12.141+0800 I CONTROL  [initandlisten] now exiting
 2017-10-11T09:31:12.141+0800 I CONTROL  [initandlisten] shutting down with code:100
 ```
+{% endraw %}
 
 这个是目录指定的问题。
 
 参考我的启动命令。 
 
+{% raw %}
 ```
 ./mongod --dbpath ../data/db/
 
@@ -160,6 +175,7 @@ db.shutdownServer();
 
 ./mongo
 ```
+{% endraw %}
 
 有的时候按照上边的步骤执行还是报错 100，这个时候看看data/db下边是不是有一个 mongod.lock 文件，这个代表上次退出不是正常退出导致文件被锁住了，所以不能正常启动。
 
@@ -169,10 +185,13 @@ db.shutdownServer();
 
 环境变量的配置可以理解为他是将变量写在了一个文件里面
 
+{% raw %}
 ```
  vi ~/**.bash_profile**
 ```
+{% endraw %}
 
+{% raw %}
 ```
 ~/.bash_profile 
 这个就是环境变量的文件地址（可以这样理解）
@@ -187,5 +206,6 @@ dd  要删除的代码，将光标放到要删除的那行双击dd
 :wq  保存文件并推出
 source ~/.bash_profile或者关闭重启shell
 ```
+{% endraw %}
 
 改完之后输出一下，便可以看到是否更改了。

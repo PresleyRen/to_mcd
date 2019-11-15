@@ -31,10 +31,13 @@ sudo pip3 install python-gnupg
 
 运行以下命令以获取可用密钥的列表：
 
+{% raw %}
 ```
 $  gpg --list-keys
 ```
+{% endraw %}
 
+{% raw %}
 ```
 /home/sammy/.gnupg/pubring.gpg
 -----------------------------
@@ -42,6 +45,7 @@ pub   2048R/4920B23F 2018-04-23
 uid                  Sammy <sammy@example.com>
 sub   2048R/50C06279 2018-04-23
 ```
+{% endraw %}
 
 记下`uid`输出行中显示的电子邮件地址。稍后您将需要它来识别您的密钥。
 
@@ -58,33 +62,41 @@ sub   2048R/50C06279 2018-04-23
 
 首先，让我们安装`python-gnupg`模块以及`fs`包，这将允许您打开，读取和编写测试文件。更新包索引，并使用`pip`命令安装这些包：
 
+{% raw %}
 ```
 $ sudo apt-get update
 $ sudo pip3 install python-gnupg fs
 ```
+{% endraw %}
 
 有了这些软件包，我们就可以继续创建脚本和测试文件。
 
 要存储脚本和测试文件，请在主目录中创建一个名为`python-test`的文件夹：
 
+{% raw %}
 ```
 $ cd ~/
 $ mkdir python-test
 ```
+{% endraw %}
 
 移至此目录：
 
+{% raw %}
 ```
 $ cd python-test/
 ```
+{% endraw %}
 
 接下来，让我们创建三个测试文件：
 
+{% raw %}
 ```
 $ echo "This is the first test file" > test1.txt
 $ echo "print('This test file is a Python script')" > test2.py
 $ echo "This is the last test file" > test3.txt
 ```
+{% endraw %}
 
 要为我们的测试文件创建分离的签名，让我们创建一个名为`signdetach.py`的脚本，该脚本将定位执行它的目录中的所有文件。签名充当时间戳并证明文档的真实性。
 
@@ -92,9 +104,11 @@ $ echo "This is the last test file" > test3.txt
 
 用`nano`打开`signdetach.py`新文件：
 
+{% raw %}
 ```
 nano signdetach.py
 ```
+{% endraw %}
 
 让我们首先导入脚本所需的所有模块。这些包括启用文件导航的`os`和`fs`包，以及`gnupg`：
 
@@ -102,6 +116,7 @@ nano signdetach.py
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -110,6 +125,7 @@ import fs
 from fs import open_fs
 import gnupg
 ```
+{% endraw %}
 
 现在让我们设置GnuPG的加密密钥的目录。GnuPG默认存储其密钥在`.gnupg`上，所以让我们用我们的用户名配置它。请务必使用非root用户的名称替换**sammy**：
 
@@ -117,10 +133,12 @@ import gnupg
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 ...
 gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 ```
+{% endraw %}
 
 接下来，让我们创建一个`home_fs`变量来将当前目录位置存储为文件对象。这将使脚本可以在执行它的目录中工作：
 
@@ -128,10 +146,12 @@ gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 ...
 home_fs = open_fs(".")
 ```
+{% endraw %}
 
 到现在为止，您的脚本将如下所示：
 
@@ -139,6 +159,7 @@ home_fs = open_fs(".")
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -150,6 +171,7 @@ import gnupg
 gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 home_fs = open_fs(".")
 ```
+{% endraw %}
 
 此配置块是您在本教程中使用时将在脚本中使用的基本模板。
 
@@ -159,6 +181,7 @@ home_fs = open_fs(".")
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 ...
 if os.path.exists("signatures/"):
@@ -167,6 +190,7 @@ else:
         home_fs.makedir(u"signatures")
         print("Created signatures directory")
 ```
+{% endraw %}
 
 创建一个空数组以存储文件名，然后扫描当前目录，将所有文件名附加到`files_dir`数组：
 
@@ -174,6 +198,7 @@ else:
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 ...
 files_dir = []
@@ -182,6 +207,7 @@ files = [f for f in os.listdir(".") if os.path.isfile(f)]
 for f in files:
     files_dir.append(f)
 ```
+{% endraw %}
 
 脚本将要做的下一件事是为文件生成分离的签名。循环遍历`files_dir`数组将使用密钥环上的第一个私钥为每个文件创建签名。要访问私钥，您需要使用您设置的密码解锁。替换`"my passphrase"`为在准备项中生成密钥对时使用的密码：
 
@@ -189,6 +215,7 @@ for f in files:
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
 ...
 for x in files_dir:
@@ -197,6 +224,7 @@ for x in files_dir:
         os.rename(files_dir[files_dir.index(x)]+".sig", "signatures/"+files_dir[files_dir.index(x)]+".sig")
         print(x+" ", stream.status)
 ```
+{% endraw %}
 
 完成后，所有签名都将移动到该`signatures/`文件夹。您完成的脚本将如下所示：
 
@@ -204,6 +232,7 @@ for x in files_dir:
 ~/python-test/signdetach.py
 
 
+{% raw %}
 ```
  #!/usr/bin/env python3
 
@@ -233,6 +262,7 @@ for x in files_dir:
         os.rename(files_dir[files_dir.index(x)]+".sig", "signatures/"+files_dir[files_dir.index(x)]+".sig")
         print(x+" ", stream.status)
 ```
+{% endraw %}
 
 现在我们可以继续加密文件了。
 
@@ -242,9 +272,11 @@ for x in files_dir:
 
 打开一个名为`encryptfiles.py`的新文件：
 
+{% raw %}
 ```
 $ nano encryptfiles.py
 ```
+{% endraw %}
 
 首先，导入所有必需的模块，设置GnuPG的主目录，并创建当前的工作目录变量：
 
@@ -252,6 +284,7 @@ $ nano encryptfiles.py
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -263,6 +296,7 @@ import gnupg
 gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 home_fs = open_fs(".")
 ```
+{% endraw %}
 
 接下来，让我们添加代码来检查当前目录是否已经有一个名为`encrypted/`的文件夹，如果它不存在则创建它：
 
@@ -270,6 +304,7 @@ home_fs = open_fs(".")
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
 ...
 if os.path.exists("encrypted/"):
@@ -278,6 +313,7 @@ else:
         home_fs.makedir(u"encrypted")
         print("Created encrypted directory")
 ```
+{% endraw %}
 
 在搜索要加密的文件之前，让我们创建一个空数组来存储文件名：
 
@@ -285,10 +321,12 @@ else:
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
 ...
 files_dir = []
 ```
+{% endraw %}
 
 接下来，创建一个循环来扫描文件夹中的文件并将它们附加到数组：
 
@@ -296,12 +334,14 @@ files_dir = []
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
 ...
 files = [f for f in os.listdir(".") if os.path.isfile(f)]
 for f in files:
     files_dir.append(f)
 ```
+{% endraw %}
 
 最后，让我们创建一个循环来加密文件夹中的所有文件。完成后，所有加密文件都将传输到该`encrypted/`文件夹。在此示例中`sammy\@example.com`是加密期间要使用的密钥的电子邮件ID。请务必将其替换为您在步骤1中记下的电子邮件地址：
 
@@ -309,6 +349,7 @@ for f in files:
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
 ...
 for x in files_dir:
@@ -319,6 +360,7 @@ for x in files_dir:
         print("stderr: ", status.stderr)
         os.rename(files_dir[files_dir.index(x)] + ".gpg", 'encrypted/' +files_dir[files_dir.index(x)] + ".gpg")
 ```
+{% endraw %}
 
 如果您的`.gnupg`文件夹中存储了多个密钥，并且希望使用特定的公钥或多个公钥进行加密，则需要在`recipients`里通过添加其他收件人或替换当前的收件人来修改阵列。
 
@@ -328,6 +370,7 @@ for x in files_dir:
 ~/python-test/encryptfiles.py
 
 
+{% raw %}
 ```
  #!/usr/bin/env python3
 
@@ -359,6 +402,7 @@ for x in files_dir:
         print("stderr: ", status.stderr)
         os.rename(files_dir[files_dir.index(x)] + ".gpg", "encrypted/" +files_dir[files_dir.index(x)] + ".gpg")
 ```
+{% endraw %}
 
 现在让我们看一下该过程的第二部分：一次解密和验证多个文件。
 
@@ -368,9 +412,11 @@ for x in files_dir:
 
 打开一个名为`decryptfiles.py`的新文件：
 
+{% raw %}
 ```
 $ nano decryptfiles.py
 ```
+{% endraw %}
 
 首先插入配置设置：
 
@@ -378,6 +424,7 @@ $ nano decryptfiles.py
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -389,6 +436,7 @@ import gnupg
 gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 home_fs = open_fs(".")
 ```
+{% endraw %}
 
 接下来，创建两个空数组以在脚本执行期间存储数据：
 
@@ -396,11 +444,13 @@ home_fs = open_fs(".")
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
 ...
 files_dir = []
 files_dir_clean = []
 ```
+{% endraw %}
 
 这里的目标是让脚本将解密后的文件放入自己的文件夹中;否则，加密和解密的文件将混合，难以找到特定的解密文件。要解决此问题，您可以添加将扫描当前文件夹以查看decrypted/文件夹是否存在的代码，如果不存在，则创建该文件夹：
 
@@ -408,6 +458,7 @@ files_dir_clean = []
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
 ...
 if os.path.exists("decrypted/"):
@@ -416,6 +467,7 @@ else:
     home_fs.makedir(u"decrypted/")
     print("Created decrypted directory")
 ```
+{% endraw %}
 
 扫描文件夹并将所有文件名附加到`files_dir`数组：
 
@@ -423,12 +475,14 @@ else:
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
 ...
 files = [f for f in os.listdir(".") if os.path.isfile(f)]
 for f in files:
     files_dir.append(f)
 ```
+{% endraw %}
 
 所有加密文件都将以`.gpg`扩展名添加到其文件名中，表明它们已加密。但是，在解密它们时，我们希望在没有此扩展名的情况下保存它们，因为它们不再加密。
 
@@ -438,6 +492,7 @@ for f in files:
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
 ...
     for x in files_dir:
@@ -446,11 +501,13 @@ for f in files:
             clean_file = x[0:endLoc]
             files_dir_clean.append(clean_file)
 ```
+{% endraw %}
 
 新的清理文件名存储在`file_dir_clean`数组中。
 
 接下来，让我们遍历文件并解密它们。替换`"my passphrase"`为您的密码以解锁私钥：
 
+{% raw %}
 ```
 ...
 for x in files_dir:
@@ -461,6 +518,7 @@ for x in files_dir:
        print("stderr: ", status.stderr)
        os.rename(files_dir_clean[files_dir.index(x)], "decrypted/" + files_dir_clean[files_dir.index(x)])
 ```
+{% endraw %}
 
 完成后，您的脚本文件将如下所示：
 
@@ -468,6 +526,7 @@ for x in files_dir:
 ~/python-test/decryptfiles.py
 
 
+{% raw %}
 ```
  #!/usr/bin/env python3
 
@@ -506,6 +565,7 @@ for x in files_dir:
        print("stderr: ", status.stderr)
        os.rename(files_dir_clean[files_dir.index(x)], "decrypted/" + files_dir_clean[files_dir.index(x)])
 ```
+{% endraw %}
 
 使用我们的解密脚本，我们可以继续验证多个文件的分离签名。
 
@@ -515,9 +575,11 @@ for x in files_dir:
 
 打开一个名为`verifydetach.py`的新文件：
 
+{% raw %}
 ```
 $ nano verifydetach.py
 ```
+{% endraw %}
 
 导入所有必需的库，设置工作和主目录，并创建空files_dir数组，如前面的示例所示：
 
@@ -525,6 +587,7 @@ $ nano verifydetach.py
 ~/python-test/verifydetach.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -538,6 +601,7 @@ home_fs = open_fs(".")
 
 files_dir = []    
 ```
+{% endraw %}
 
 接下来，让我们扫描包含我们要验证的文件的文件夹。文件名将附加到空`files_dir`数组：
 
@@ -545,12 +609,14 @@ files_dir = []
 ~/python-test/verifydetach.py
 
 
+{% raw %}
 ```
 ...
 files = [f for f in os.listdir(".") if os.path.isfile(f)]
 for f in files:
 files_dir.append(f)
 ```
+{% endraw %}
 
 最后，让我们使用一个遍历`files_dir`数组的循环来验证每个文件是否有自己的分离签名，以搜索文件`signatures/`夹中每个文件的分离签名。当它找到分离的签名时，它将使用它验证文件。最后一行打印出每个文件验证的状态：
 
@@ -558,6 +624,7 @@ files_dir.append(f)
 ~/python-test/verifydetach.py
 
 
+{% raw %}
 ```
 ...
 for i in files_dir:
@@ -565,6 +632,7 @@ for i in files_dir:
          verify = gpg.verify_file(f, i)
          print(i + " ", verify.status)
 ```
+{% endraw %}
 
 完成后，您的脚本将如下所示：
 
@@ -572,6 +640,7 @@ for i in files_dir:
 ~/python-test/verifydetach.py
 
 
+{% raw %}
 ```
  #!/usr/bin/env python3
 
@@ -594,6 +663,7 @@ for i in files_dir:
         verify = gpg.verify_file(f, i)
         print(i + " ", verify.status)
 ```
+{% endraw %}
 
 接下来，让我们来看看如何在服务器执行文件之前验证文件的签名。
 
@@ -603,9 +673,11 @@ for i in files_dir:
 
 创建一个名为`verifyfile.py`的新文件：
 
+{% raw %}
 ```
 $ nano verifyfile.py
 ```
+{% endraw %}
 
 让我们首先导入必要的库并设置工作目录：
 
@@ -613,6 +685,7 @@ $ nano verifyfile.py
 ~/python-test/verifyfile.py
 
 
+{% raw %}
 ```
 #!/usr/bin/env python3
 
@@ -624,6 +697,7 @@ import gnupg
 gpg = gnupg.GPG(gnupghome="/home/sammy/.gnupg")
 home_fs = open_fs(".")
 ```
+{% endraw %}
 
 要使脚本正常工作，必须存储要验证和执行的文件名。为此，让我们创建一个名为`script_to_run`的新变量：
 
@@ -631,10 +705,12 @@ home_fs = open_fs(".")
 ~/python-test/verifyfile.py
 
 
+{% raw %}
 ```
 ...
 script_to_run = str(sys.argv[1])
 ```
+{% endraw %}
 
 此变量获取第一个参数并将其存储在新创建的变量中。接下来，脚本将打开分离的签名文件，使用其签名验证`script_to_run`中的文件，然后在通过验证时执行：
 
@@ -642,6 +718,7 @@ script_to_run = str(sys.argv[1])
 ~/python-test/verifyfile.py
 
 
+{% raw %}
 ```
 ...
 with open("../../signatures/" + script_to_run + ".sig", "rb") as f:
@@ -654,6 +731,7 @@ with open("../../signatures/" + script_to_run + ".sig", "rb") as f:
            print("Signature invalid or missing, ")
            print("aborting script execution")
 ```
+{% endraw %}
 
 完成的脚本将如下所示：
 
@@ -661,6 +739,7 @@ with open("../../signatures/" + script_to_run + ".sig", "rb") as f:
 ~/python-test/verifyfile.py
 
 
+{% raw %}
 ```
  #!/usr/bin/env python3
 
@@ -685,6 +764,7 @@ with open("../../signatures/" + script_to_run + ".sig", "rb") as f:
         print("Signature invalid or missing, ")
         print("aborting script execution")
 ```
+{% endraw %}
 
 我们已经完成了脚本的创建，但目前它们只能从当前文件夹中启动。在下一步中，我们将修改其权限以使其可全局访问。
 
@@ -692,24 +772,31 @@ with open("../../signatures/" + script_to_run + ".sig", "rb") as f:
 
 为了便于让我们从系统上的任何目录或文件夹中执行脚本，并将它们放在我们的`$PATH`中。使用该`chmod`命令为非root用户提供文件所有者的可执行权限：
 
+{% raw %}
 ```
 $ chmod +x *.py
 ```
+{% endraw %}
 
 现在要查找您的`PATH`置，请运行以下命令：
 
+{% raw %}
 ```
 $ echo $PATH
 ```
+{% endraw %}
 
+{% raw %}
 ```
 -bash: /home/sammy/bin:/home/sammy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 ```
+{% endraw %}
 
 如果目录的权限允许，存储在您的`$PATH`中的文件可以从系统中的任何文件夹访问。您可以将脚本放在您的`$PATH`中的任何位置，但是现在让我们将脚本从`python-test/`目录移动到`/usr/local/bin/`。
 
 请注意，我们在复制文件时删除扩展名`.py`。如果看一下我们创建的脚本的第一行，会看到`#!usr/bin/env python3`。这行称为shebang，它有助于操作系统识别执行代码时使用的bash解释器或环境。当我们执行脚本时，操作系统会注意到我们将Python指定为我们的环境，并将代码传递给Python执行。这意味着我们不再需要文件扩展名来帮助确定我们想要使用的环境：
 
+{% raw %}
 ```
 $ sudo mv encryptfiles.py /usr/local/bin/encryptfiles
 $ sudo mv decryptfiles.py /usr/local/bin/decryptfiles
@@ -717,6 +804,7 @@ $ sudo mv signdetach.py /usr/local/bin/signdetach
 $ sudo mv verifyfile.py /usr/local/bin/verifyfile
 $ sudo mv verifydetach.py /usr/local/bin/verifydetach
 ```
+{% endraw %}
 
 现在，只需运行脚本名称以及脚本可能从命令行获取的任何参数，就可以在系统中的任何位置执行脚本。在下一步中，我们将介绍如何使用这些脚本的一些示例。
 
@@ -726,61 +814,80 @@ $ sudo mv verifydetach.py /usr/local/bin/verifydetach
 
 首先，使用`pwd`命令检查您是否仍在`python-test`目录中工作：
 
+{% raw %}
 ```
 $ pwd
 ```
+{% endraw %}
 
 输出应该是：
 
+{% raw %}
 ```
 /home/sammy/python-test
 ```
+{% endraw %}
 
 您在本教程前面创建了三个测试文件。运行该`ls -l`命令以列出文件夹中的文件：
 
+{% raw %}
 ```
 $ ls -l
 ```
+{% endraw %}
 
 您应该看到文件`python-test`夹中存储了三个文件：
 
+{% raw %}
 ```
 -rw-rw-r-- 1 sammy sammy 15 Apr 15 10:08 test1.txt
 -rwxrwxr-x 1 sammy sammy 15 Apr 15 10:08 test2.py 
 -rw-rw-r-- 1 sammy sammy 15 Apr 15 10:08 test3.txt
 ```
+{% endraw %}
 
 我们将测试这三个文件的脚本。您可以使用cat命令在加密前快速显示文件的内容，如下所示：
 
+{% raw %}
 ```
 $ cat test1.txt
 ```
+{% endraw %}
 
+{% raw %}
 ```
 This is the first test file
 ```
+{% endraw %}
 
 让我们首先为所有文件创建分离签名。为此，请从当前文件夹中执行`signdetach`脚本：
 
+{% raw %}
 ```
 $ signdetach
 ```
+{% endraw %}
 
+{% raw %}
 ```
 Created signatures directory
 test2.py  signature created
 test1.txt  signature created
 test3.txt  signature created
 ```
+{% endraw %}
 
 请注意，在输出中，脚本检测到`signatures/`目录不存在，所以之后创建了它。然后它也创建了文件签名。
 
 我们可以通过`ls -l`再次运行命令来确认：
 
+{% raw %}
 ```
 $ ls -l
 ```
+{% endraw %}
 
+{% raw %}
 ```
 total 16
 drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:11 signatures
@@ -788,28 +895,36 @@ drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:11 signatures
 -rwxrwxr-x 1 sammy sammy 15 Apr 15 10:08 test2.py 
 -rw-rw-r-- 1 sammy sammy 15 Apr 15 10:08 test3.txt
 ```
+{% endraw %}
 
 注意列表之间的新`signatures`目录。让我们列出这个文件夹的内容，并仔细查看其中一个签名。
 
 要列出所有签名，请键入：
 
+{% raw %}
 ```
 $ ls -l signatures/
 ```
+{% endraw %}
 
+{% raw %}
 ```
 total 12
 -rw-rw-r-- 1 sammy sammy 473 Apr 21 14:11 test1.txt.sig
 -rw-rw-r-- 1 sammy sammy 473 Apr 21 14:11 test2.py.sig
 -rw-rw-r-- 1 sammy sammy 473 Apr 21 14:11 test3.txt.sig
 ```
+{% endraw %}
 
 `.sig`扩展可以识别分离的签名文件。同样，该cat命令可以显示这些签名的内容。我们来看看`test1.txt.sig`签名的内容：
 
+{% raw %}
 ```
 $ cat signatures/test1.txt.sig
 ```
+{% endraw %}
 
+{% raw %}
 ```
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
@@ -823,15 +938,19 @@ MFWSb+X85KwwftIezqCV/hqsMKAuhkvfIi+YQFCDXElJMtjPBxxuvZFjQFjEHe8=
 =4NB5
 -----END PGP SIGNATURE-----
 ```
+{% endraw %}
 
 此输出是`test1.txt`分离的签名。
 
 有了签名，就可以继续加密我们的文件。为此，请执行以下`encryptfiles`脚本：
 
+{% raw %}
 ```
 $ encryptfiles
 ```
+{% endraw %}
 
+{% raw %}
 ```
 Created encrypted directory
 ok:  True
@@ -849,13 +968,17 @@ status:  encryption ok
 stderr:  [GNUPG:] BEGIN_ENCRYPTION 2 9
 [GNUPG:] END_ENCRYPTION
 ```
+{% endraw %}
 
 从输出中，注意脚本创建了`encrypted/`文件夹。另请注意，所有文件都已成功加密。再次运行`ls -l命令并注意目录中的新文件夹：
 
+{% raw %}
 ```
 $ ls -l
 ```
+{% endraw %}
 
+{% raw %}
 ```
 total 20
 drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:42 encrypted
@@ -864,13 +987,17 @@ drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:11 signatures
 -rw-rw-r-- 1 sammy sammy   15 Apr 15 10:08 test2.py
 -rw-rw-r-- 1 sammy sammy   15 Apr 15 10:08 test3.txt
 ```
+{% endraw %}
 
 让我们看看`test1.txt`现在是如何加密的：
 
+{% raw %}
 ```
 $ cat encrypted/test1.txt.gpg
 ```
+{% endraw %}
 
+{% raw %}
 ```
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG v1
@@ -886,6 +1013,7 @@ AUoBjuBpQMp4RQ==
 =xJST
 -----END PGP MESSAGE-----
 ```
+{% endraw %}
 
 存储在原始文件中的句子已被转换为复杂的字符和数字系列。
 
@@ -893,41 +1021,54 @@ AUoBjuBpQMp4RQ==
 
 要删除原件，请键入：
 
+{% raw %}
 ```
 $ rm *.txt *.py
 ```
+{% endraw %}
 
 再次运行`ls -l`命令以确保已删除所有原始文件：
 
+{% raw %}
 ```
 $ ls -l
 ```
+{% endraw %}
 
+{% raw %}
 ```
 total 8
 drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:42 encrypted
 drwxrwxr-x 2 sammy sammy 4096 Apr 21 14:11 signatures
 ```
+{% endraw %}
 
 原始文件删除后，让我们解密并验证加密文件。切换到`encrypted`文件夹并列出所有文件：
 
+{% raw %}
 ```
 cd encrypted/ && ls -l
 ```
+{% endraw %}
 
+{% raw %}
 ```
 total 12
 -rw-rw-r-- 1 sammy sammy 551 Apr 21 14:42 test1.txt.gpg
 -rw-rw-r-- 1 sammy sammy 551 Apr 21 14:42 test2.py.gpg
 -rw-rw-r-- 1 sammy sammy 551 Apr 21 14:42 test3.txt.gpg
 ```
+{% endraw %}
 
 要解密文件，请从当前文件夹中运行`decryptfiles`脚本：
 
+{% raw %}
 ```
 $ decryptfiles
 ```
+{% endraw %}
 
+{% raw %}
 ```
 OutputCreated decrypted directory
 
@@ -1021,18 +1162,23 @@ gpg: encrypted with 2048-bit RSA key, ID 3C717DE6, created 2018-04-15
 
 [GNUPG:] END_DECRYPTION
 ```
+{% endraw %}
 
 为每个文件返回的`status: decryption ok`脚本，意味着每个文件都被成功解密。
 
 切换到新`decrypted/`文件夹并使用`cat`命令显示`test1.txt`的内容：
 
+{% raw %}
 ```
 $ cd decrypted/ && cat test1.txt
 ```
+{% endraw %}
 
+{% raw %}
 ```
 This is the first test file
 ```
+{% endraw %}
 
 我们已经恢复了`test1.txt`中我们删除的文件中存储的消息。
 
@@ -1044,23 +1190,29 @@ This is the first test file
 
 从`decrypted`文件夹中运行脚本：
 
+{% raw %}
 ```
 $ verifydetach
 ```
+{% endraw %}
 
+{% raw %}
 ```
 test2.py  signature valid
 test1.txt  signature valid
 test3.txt  signature valid
 ```
+{% endraw %}
 
 您可以从输出中看到所有文件都具有有效签名，这意味着在此过程中文档未被篡改。
 
 现在让我们看一下在您签署文档后对文档进行更改时会发生什么。使用`nano`打开`test1.txt`文件：
 
+{% raw %}
 ```
 nano test1.txt
 ```
+{% endraw %}
 
 现在将以下句子添加到文件中：
 
@@ -1068,24 +1220,30 @@ nano test1.txt
 ~/python-test/encrypted/decrypted/test1.txt
 
 
+{% raw %}
 ```
 This is the first test file
 Let's add a sentence after signing the file
 ```
+{% endraw %}
 
 保存并关闭文件。
 
 现在重新运行`verifydetach`脚本并注意输出的更改方式：
 
+{% raw %}
 ```
 verifydetach
 ```
+{% endraw %}
 
+{% raw %}
 ```
 test2.py  signature valid
 test1.txt  signature bad
 test3.txt  signature valid
 ```
+{% endraw %}
 
 请注意，GnuPG在验证`test1.txt`时返回`signature bad`。这是因为我们在签名后对文件进行了更改。请记住，在验证过程中，`gpg`将签名文件中存储的哈希值与您从签名文档中计算的哈希值进行比较。我们对`test1.txt`文档所做的更改导致`gpg`计算出不同的哈希值。
 
@@ -1095,44 +1253,56 @@ test3.txt  signature valid
 
 使用verifyfile运行test2.py脚本：
 
+{% raw %}
 ```
 $ verifyfile test2.py
 ```
+{% endraw %}
 
+{% raw %}
 ```
 test2.py  signature valid
 Signature valid, launching script...
 The second test file is a Python script
 ```
+{% endraw %}
 
 从输出中可以看到脚本验证了文件的签名，根据该验证打印了适当的结果，然后启动了脚本。
 
 让我们通过在文件中添加额外的代码行来测试验证过程。打开test2.py并插入以下代码行：
 
+{% raw %}
 ```
 $ nano test2.py
 ```
+{% endraw %}
 
 > 
 ~/python-test/encrypted/decrypted/test2.py
 
 
+{% raw %}
 ```
 print "The second test file is a Python script"
 print "This line will cause the verification script to abort"
 ```
+{% endraw %}
 
 现在重新运行`verifyfile`脚本：
 
+{% raw %}
 ```
 $ verifyfile test2.py
 ```
+{% endraw %}
 
+{% raw %}
 ```
 test2.py signature bad
 Signature invalid, 
 aborting script execution
 ```
+{% endraw %}
 
 脚本验证失败，导致脚本启动中止。
 

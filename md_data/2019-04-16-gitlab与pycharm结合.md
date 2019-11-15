@@ -4,7 +4,7 @@ title:      gitlab与pycharm结合
 subtitle:   
 date:       2019-04-16
 author:     P
-header-img: img/post-bg-github-cup.jpg
+header-img: img/post-bg-re-vs-ng2.jpg
 catalog: true
 tags:
     - python

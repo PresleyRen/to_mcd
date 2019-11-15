@@ -4,7 +4,7 @@ title:      MacOS终端利器iTerm2
 subtitle:   
 date:       2019-05-14
 author:     P
-header-img: img/post-bg-ios9-web.jpg
+header-img: img/post-bg-keybord.jpg
 catalog: true
 tags:
     - python
@@ -21,9 +21,11 @@ tags:
 
 或者你可以直接使用 Homebrew 进行安装：
 
+{% raw %}
 ```
 `$ brew cask install iterm2卸载：　　uninstall_oh_my_zsh`
 ```
+{% endraw %}
 
 ## 2. 配置 iTerm2 主题
 
@@ -39,15 +41,19 @@ Oh My Zsh 是对主题的进一步扩展，地址：https://github.com/robbyruss
 
 一键安装：
 
+{% raw %}
 ```
 `$ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 ```
+{% endraw %}
 
 安装好之后，需要把 Zsh 设置为当前用户的默认 Shell（这样新建标签的时候才会使用 Zsh）：
 
+{% raw %}
 ```
 `$ chsh -s /bin/zsh`
 ```
+{% endraw %}
 
 然后，我们编辑`vim ~/.zshrc`文件，将主题配置修改为`ZSH_THEME="agnoster"`。
 
@@ -81,15 +87,19 @@ Oh My Zsh 是对主题的进一步扩展，地址：https://github.com/robbyruss
 
 使用 Homebrew 安装：
 
+{% raw %}
 ```
 `$ brew install zsh-syntax-highlighting`
 ```
+{% endraw %}
 
 安装成功之后，编辑`vim ~/.zshrc`文件，在最后一行增加下面配置：
 
+{% raw %}
 ```
 `source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh`
 ```
+{% endraw %}
 
 <img src="https://images2017.cnblogs.com/blog/435188/201712/435188-20171228124702378-701306768.png" alt="" width="800px" />
 
@@ -99,9 +109,11 @@ Oh My Zsh 是对主题的进一步扩展，地址：https://github.com/robbyruss
 
 配置步骤，先克隆`zsh-autosuggestions`项目，到指定目录：
 
+{% raw %}
 ```
 `$ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions`
 ```
+{% endraw %}
 
 然后编辑`vim ~/.zshrc`文件，找到`plugins`配置，增加`zsh-autosuggestions`插件。
 
@@ -145,14 +157,17 @@ Oh My Zsh 是对主题的进一步扩展，地址：https://github.com/robbyruss
 
 编辑`~ vim ~/.zshrc`，增加下面配置（使用的 shadowsocks）：
 
+{% raw %}
 ```
 <code class="hljs"># proxy list
 alias proxy='export all_proxy=socks5://127.0.0.1:1086'
 alias unproxy='unset all_proxy'</code>
 ```
+{% endraw %}
 
 iTerm2 需要新建标签页，才有效果：
 
+{% raw %}
 ```
 <code class="hljs">$ proxy
 $ curl ip.cn
@@ -162,9 +177,11 @@ $ unproxy
 $ curl ip.cn
 当前 IP：115.236.186.130 来自：浙江省杭州市 电信</code>
 ```
+{% endraw %}
 
 我们可以测试下：
 
+{% raw %}
 ```
 <code class="hljs">$ curl https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
 
@@ -179,6 +196,7 @@ $ curl ip.cn
   </body>
 </html></code>
 ```
+{% endraw %}
 
 ## 11. iTerm2 快捷命令
 

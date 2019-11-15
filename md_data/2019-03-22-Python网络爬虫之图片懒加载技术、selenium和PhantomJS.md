@@ -4,7 +4,7 @@ title:      Python网络爬虫之图片懒加载技术、selenium和PhantomJS
 subtitle:   
 date:       2019-03-22
 author:     P
-header-img: img/post-bg-iWatch.jpg
+header-img: img/post-bg-YesOrNo.jpg
 catalog: true
 tags:
     - python
@@ -77,6 +77,7 @@ if __name__ == "__main__":
 
 站长素材案例后续分析：通过细致观察页面的结构后发现，网页中图片的链接是存储在了src2这个伪属性中
 
+{% raw %}
 ```
 <code class="language-python hljs">#!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -103,6 +104,7 @@ if __name__ == "__main__":
          print(image_url) #打印图片链接
          print(image_name)#打印图片名称</code>
 ```
+{% endraw %}
 
 二.selenium
 
@@ -127,6 +129,7 @@ if __name__ == "__main__":
 下载的驱动程序必须和浏览器的版本统一，大家可以根据`http://blog.csdn.net/huilan_same/article/details/51896672中提供的版本映射表进行对应`
 </li>
 
+{% raw %}
 ```
 <code class="language-python hljs">from selenium import webdriver
 from time import sleep
@@ -169,9 +172,11 @@ sleep(3)
 # 关闭浏览器
 driver.quit()</code>
 ```
+{% endraw %}
 
 代码介绍：
 
+{% raw %}
 ```
 <code class="hljs coffeescript">#导包
 from selenium import webdriver  
@@ -187,6 +192,7 @@ browser.get(url)
     find_elements_by_tag_name     根据标签名找
     find_elements_by_class_name   根据class名字查找</code>
 ```
+{% endraw %}
 
 三.phantomJs
 

@@ -4,7 +4,7 @@ title:      Flask中的request之先知道有这么个东西
 subtitle:   
 date:       2019-04-11
 author:     P
-header-img: img/post-bg-debug.png
+header-img: img/post-bg-github-cup.jpg
 catalog: true
 tags:
     - python
@@ -33,14 +33,17 @@ methods=["POST"]  代表这个url地址只允许 POST 请求,是个列表也就�
 
 Flask 的 request 中给我们提供了一个 method 属性里面保存的就是前端的请求的方式
 
+{% raw %}
 ```
 print(request.method) # POST 看来可以使用这种方式来验证请求方式了
 ```
+{% endraw %}
 
 2.request.form 之 拿他来举例的话再好不过了
 
 Form表单中传递过来的值 使用 request.form 中拿到
 
+{% raw %}
 ```
     print(request.form)  # ImmutableMultiDict([('user', 'Oldboy'), ('pwd', 'DragonFire')])
     # ImmutableMultiDict 它看起来像是的Dict 就用Dict的方法取值试一下吧
@@ -52,6 +55,7 @@ Form表单中传递过来的值 使用 request.form 中拿到
     req_dict = dict(request.form)
     print(req_dict)  # 如果你觉得用字典更爽的话,也可以转成字典操作(这里有坑)
 ```
+{% endraw %}
 
 3.request.args 之 你能看见的Url参数全在里面
 
@@ -69,6 +73,7 @@ request.args 中保存的是url中传递的参数
 
 哎呀我去,这不是和刚才一样吗? 是的!
 
+{% raw %}
 ```
     print(request.args)  # ImmutableMultiDict([('id', '1'), ('age', '20')])
     print(request.args["id"])  # 1
@@ -78,6 +83,7 @@ request.args 中保存的是url中传递的参数
     req_dict = dict(request.args)  # {'id': ['1'], 'age': ['20']}
     print(req_dict)
 ```
+{% endraw %}
 
 request.args 与 request.form 的区别就是:
 
@@ -93,6 +99,7 @@ request.form 是获取form表单中的参数
 
 这是让我们在使用form表单提交的同时使用url参数提交
 
+{% raw %}
 ```
 print(request.values)  # CombinedMultiDict([ImmutableMultiDict([('id', '1'), ('age', '20')]), ImmutableMultiDict([('user', 'Oldboy'), ('pwd', 'DragonFire')])])
 print(request.values.get("id"))  # 1
@@ -100,15 +107,18 @@ print(request.values["user"])  # Oldboy
 # 这回喜欢直接操作字典的小伙伴们有惊喜了! to_dict() 方法可以直接将我们的参数全部转为字典形式
 print(request.values.to_dict()) # {'user': 'Oldboy', 'pwd': 'DragonFire', 'id': '1', 'age': '20'}
 ```
+{% endraw %}
 
 注意啦!注意啦!
 
+{% raw %}
 ```
 # 注意这里的坑来啦! 坑来啦!
 # 如果url和form中的Key重名的话,form中的同名的key中value会被url中的value覆盖
 # http://127.0.0.1:5000/req?id=1&user=20
 print(request.values.to_dict())  # {'user': 20 'pwd': 'DragonFire', 'id': '1'}
 ```
+{% endraw %}
 
 5.request.cookies 之 存在浏览器端的字符串儿也会一起带过来
 
@@ -120,6 +130,7 @@ request.cookies 是将cookies中信息读取出来
 
 用来获取本次请求的请求头
 
+{% raw %}
 ```
     print(type(request.headers))
     """
@@ -137,6 +148,7 @@ request.cookies 是将cookies中信息读取出来
     Cache-Control: max-age=0
     """
 ```
+{% endraw %}
 
 7.request.data 之 如果处理不了的就变成字符串儿存在data里面
 
@@ -158,17 +170,20 @@ mimetype的类型 以及 字符串儿 : [http://www.w3school.com.cn/media/media_
 
 后端这样写
 
+{% raw %}
 ```
     print(request.files)  # ImmutableMultiDict([('file', <FileStorage: 'DragonFire.txt' ('text/plain')>)])
     print(request.files["file"])  # <FileStorage: 'DragonFire.txt' ('text/plain')>
     my_file = request.files["file"]
     my_file.save("OldBoyEDU.txt")  # 保存文件,里面可以写完整路径+文件名
 ```
+{% endraw %}
 
 这样我们就成功的保存了一个名叫 "OldBoyEDU.txt" 的文件了,操作还是很简单的
 
 9. request.获取各种路径 之 这些方法没必要记,但是要知道它存在
 
+{% raw %}
 ```
     # 获取当前的url路径
     print(request.path)# /req
@@ -179,6 +194,7 @@ mimetype的类型 以及 字符串儿 : [http://www.w3school.com.cn/media/media_
     # 当前url的路径的上一级全部路径
     print(request.url_root ) # http://127.0.0.1:5000/
 ```
+{% endraw %}
 
 10. request.json 之 前提你得告诉是json
 

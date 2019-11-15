@@ -4,7 +4,7 @@ title:      Flask中内置的Session
 subtitle:   
 date:       2019-04-11
 author:     P
-header-img: img/post-bg-BJJ.jpg
+header-img: img/post-bg-miui6.jpg
 catalog: true
 tags:
     - python
@@ -13,14 +13,17 @@ Flask中的Session非常的奇怪,他会将你的SessionID存放在客户端的C
 
 1. Flask 中 session 是需要 secret_key 的
 
+{% raw %}
 ```
 from flask import session
 app = Flask(__name__)
 app.secret_key = "DragonFire"
 ```
+{% endraw %}
 
 2. session 要这样用
 
+{% raw %}
 ```
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -32,6 +35,7 @@ def login():
 
     return render_template("login.html", msg=None)  # 如果前端Jinja2模板中使用了msg,这里就算是传递None也要出现msg
 ```
+{% endraw %}
 
 3. cookies 中的 session 是什么
 
@@ -39,6 +43,7 @@ cookies 中 session 存储的是通过 secret_key 加密后的 key , 通过这�
 
 4. 怎么用 session 进行验证呢?
 
+{% raw %}
 ```
 @app.route("/student_list")
 def student():
@@ -47,6 +52,7 @@ def student():
 
     return redirect("/login")
 ```
+{% endraw %}
 
 如果这个你要是看不明白的,我只能从基础给你讲了
 

@@ -4,7 +4,7 @@ title:      Ubuntu上如何安装Docker
 subtitle:   
 date:       2019-09-02
 author:     P
-header-img: img/post-bg-miui6.jpg
+header-img: img/post-bg-universe.jpg
 catalog: true
 tags:
     - python
@@ -55,19 +55,24 @@ systemctl start docker
 
 报错：
 
+{% raw %}
 ```
 Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.40/images/search?limit=25&term=ubuntu: dial unix /var/run/docker.sock: connect: permission denied
 ```
+{% endraw %}
 
 解决：
 
+{% raw %}
 ```
 sudo groupadd docker     #添加docker用户组
 sudo gpasswd -a $USER docker     #将登陆用户加入到docker用户组中
 newgrp docker     #更新用户组
 docker ps    #测试docker命令是否可以使用sudo正常使用
 ```
+{% endraw %}
 
+{% raw %}
 ```
 if:
 The docker-compose version is too low. current version: 1.8.0, mininum version:1.10.0
@@ -78,6 +83,7 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
+{% endraw %}
 
 运行系统引导时启用 docker，命令：
 

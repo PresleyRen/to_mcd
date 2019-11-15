@@ -4,7 +4,7 @@ title:      Flask-SQLAlchemy
 subtitle:   
 date:       2019-04-10
 author:     P
-header-img: img/home-bg-geek.jpg
+header-img: img/post-bg-ioses.jpg
 catalog: true
 tags:
     - python
@@ -25,6 +25,7 @@ pip install Flask-SQLAlchemy
 
 ### 1.加入Flask-SQLAlchemy第三方组件
 
+{% raw %}
 ```
  1 from flask import Flask
  2 
@@ -57,9 +58,11 @@ pip install Flask-SQLAlchemy
 29 
 30     return app
 ```
+{% endraw %}
 
 ### 2.建立models.py ORM模型文件
 
+{% raw %}
 ```
  1 from MyApp import db
  2 
@@ -89,9 +92,11 @@ pip install Flask-SQLAlchemy
 26         db.drop_all()
 27         db.create_all()
 ```
+{% endraw %}
 
 ### 3.登录视图函数的应用
 
+{% raw %}
 ```
  1 from flask import Blueprint, request, render_template
  2 
@@ -123,6 +128,7 @@ pip install Flask-SQLAlchemy
 28 
 29     return render_template("login.html")
 ```
+{% endraw %}
 
 其实Flask-SQLAlchemy比起SQLAlchemy更加的简单自如,用法几乎一模一样,就是在配置和启动上需要注意与Flask的配合就好啦
 

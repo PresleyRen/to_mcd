@@ -4,7 +4,7 @@ title:      django中的request对象
 subtitle:   
 date:       2018-12-13
 author:     P
-header-img: img/post-bg-2015.jpg
+header-img: img/post-bg-map.jpg
 catalog: true
 tags:
     - python
@@ -25,9 +25,11 @@ Request
 
 4  HttpRequest.path_info     获取具有 URL 扩展名的资源的附加路径信息。相对于HttpRequest.path，使用该方法便于移植。
 
+{% raw %}
 ```
 if the WSGIScriptAlias for your application is set to "/minfo", then path might be "/minfo/music/bands/the_beatles/" and path_info would be "/music/bands/the_beatles/".
 ```
+{% endraw %}
 
 5  HttpRequest.method               获取该请求的方法，比如： GET   POST .........
 

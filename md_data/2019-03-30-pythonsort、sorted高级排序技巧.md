@@ -4,7 +4,7 @@ title:      pythonsort、sorted高级排序技巧
 subtitle:   
 date:       2019-03-30
 author:     P
-header-img: img/post-bg-swift.jpg
+header-img: img/post-bg-github-cup.jpg
 catalog: true
 tags:
     - python

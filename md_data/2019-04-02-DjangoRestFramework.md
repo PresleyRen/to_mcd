@@ -4,7 +4,7 @@ title:      DjangoRestFramework
 subtitle:   
 date:       2019-04-02
 author:     P
-header-img: img/post-bg-unix-linux.jpg
+header-img: img/post-bg-miui6.jpg
 catalog: true
 tags:
     - python
@@ -61,6 +61,7 @@ tags:
 - https://api.example.com/v1/zoos?sortby=name&order=asc：指定返回结果按照哪个属性排序，以及排序顺序
 - https://api.example.com/v1/zoos?animal_type_id=1：指定筛选条件
 
+{% raw %}
 ```
 200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。
 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。
@@ -77,6 +78,7 @@ tags:
 
 更多看这里：http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 ```
+{% endraw %}
 <td class="gutter">123</td><td class="code">`{``    ``error: ``"Invalid API key"``}`</td>
 <td class="gutter">123456</td><td class="code">`GET ``/``collection：返回资源对象的列表（数组）``GET ``/``collection``/``resource：返回单个资源对象``POST ``/``collection：返回新生成的资源对象``PUT ``/``collection``/``resource：返回完整的资源对象``PATCH ``/``collection``/``resource：返回完整的资源对象``DELETE ``/``collection``/``resource：返回一个空文档`</td>
 <td class="gutter">123456</td><td class="code">`{``"link"``: {``  ``"rel"``:   ``"collection https://www.example.com/zoos"``,``  ``"href"``:  ``"https://api.example.com/zoos"``,``  ``"title"``: ``"List of zoos"``,``  ``"type"``:  ``"application/vnd.yourformat+json"``}}`</td>
@@ -107,6 +109,7 @@ views.py
 
 a. 用户url传入的token认证
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.viewsimport TestView
@@ -115,7 +118,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -181,7 +186,9 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.viewsimport TestView
@@ -190,7 +197,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -266,9 +275,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 **c.** 多个认证规则
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s2_auth import TestView
@@ -277,7 +288,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -392,9 +405,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 **d.** 认证和权限
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -403,7 +418,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -505,11 +522,13 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 **e.** 全局使用
 
 上述操作中均是对单独视图进行特殊配置，如果想要对全局进行配置，则需要再配置文件中写入即可。
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'UNAUTHENTICATED_USER': None,
@@ -522,7 +541,9 @@ REST_FRAMEWORK = {
     ],
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -531,7 +552,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -552,11 +575,13 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 ### **3. 用户访问次数/频率限制**
 
 a. 基于用户IP限制访问频率
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -565,7 +590,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -671,7 +698,9 @@ class TestView(APIView):
 
         raise Throttled(wait)
 ```
+{% endraw %}
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
@@ -679,7 +708,9 @@ REST_FRAMEWORK = {
     },
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -688,7 +719,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -749,9 +782,11 @@ class TestView(APIView):
 
         raise Throttled(wait)
 ```
+{% endraw %}
 
 c. view中限制请求频率
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
@@ -759,7 +794,9 @@ REST_FRAMEWORK = {
     },
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -768,7 +805,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -830,9 +869,11 @@ class TestView(APIView):
 
         raise Throttled(wait)
 ```
+{% endraw %}
 
 d. 匿名时用IP限制+登录时用Token限制
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'UNAUTHENTICATED_USER': None,
@@ -843,7 +884,9 @@ REST_FRAMEWORK = {
     },
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s3_throttling import TestView
@@ -852,7 +895,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -926,9 +971,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 e. 全局使用
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': [
@@ -943,6 +990,7 @@ REST_FRAMEWORK = {
     },
 }
 ```
+{% endraw %}
 
 ### **4. 版本**
 
@@ -950,6 +998,7 @@ a. 基于url的get传参方式
 
 **如：/users?version=v1**
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_VERSION': 'v1',            # 默认版本
@@ -957,7 +1006,9 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version'          # URL中获取值的key
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -966,7 +1017,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view(),name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -997,9 +1050,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 **如：/v1/users/**
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_VERSION': 'v1',            # 默认版本
@@ -1007,7 +1062,9 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version'          # URL中获取值的key
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1016,7 +1073,9 @@ urlpatterns = [
     url(r'^(?P<version>[v1|v2]+)/test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1046,11 +1105,13 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 c. 基于 accept 请求头方式
 
 **如：Accept: application/json; version=1.0**
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_VERSION': 'v1',            # 默认版本
@@ -1058,7 +1119,9 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version'          # URL中获取值的key
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1067,7 +1130,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1096,11 +1161,13 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 d. 基于主机名方法
 
 **如：v1.example.com**
 
+{% raw %}
 ```
 ALLOWED_HOSTS = ['*']
 REST_FRAMEWORK = {
@@ -1109,7 +1176,9 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version'  # URL中获取值的key
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1118,7 +1187,9 @@ urlpatterns = [
     url(r'^test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1147,11 +1218,13 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 e. 基于django路由系统的namespace
 
 **如：example.com/v1/users/**
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_VERSION': 'v1',  # 默认版本
@@ -1159,7 +1232,9 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version'  # URL中获取值的key
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1174,7 +1249,9 @@ urlpatterns = [
 
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1203,9 +1280,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 f. 全局使用
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS':"rest_framework.versioning.URLPathVersioning",
@@ -1214,6 +1293,7 @@ REST_FRAMEWORK = {
     'VERSION_PARAM': 'version' 
 }
 ```
+{% endraw %}
 
 ### 5. 解析器（parser） 
 
@@ -1221,6 +1301,7 @@ REST_FRAMEWORK = {
 
 a. 仅处理请求头content-type为application/json的请求体
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s5_parser import TestView
@@ -1229,7 +1310,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1257,7 +1340,9 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1266,7 +1351,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1294,9 +1381,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 c. 仅处理请求头content-type为multipart/form-data的请求体
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1305,7 +1394,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1331,7 +1422,9 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -1350,9 +1443,11 @@ class TestView(APIView):
 </body>
 </html>
 ```
+{% endraw %}
 
 d. 仅上传文件
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1361,7 +1456,9 @@ urlpatterns = [
     url(r'test/(?P<filename>[^/]+)', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1388,7 +1485,9 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -1407,11 +1506,13 @@ class TestView(APIView):
 </body>
 </html>
 ```
+{% endraw %}
 
 e. 同时多个Parser
 
 当同时使用多个parser时，rest framework会根据请求头content-type自动进行比对，并使用对应parser
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1420,7 +1521,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1446,9 +1549,11 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 f. 全局使用
 
+{% raw %}
 ```
 REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES':[
@@ -1459,7 +1564,9 @@ REST_FRAMEWORK = {
 
 }
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import TestView
@@ -1468,7 +1575,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1490,6 +1599,7 @@ class TestView(APIView):
     def put(self, request, *args, **kwargs):
         return Response('PUT请求，响应内容')
 ```
+{% endraw %}
 
 **注意：个别特殊的值可以通过Django的request对象 request._request 来进行获取**
 
@@ -1499,6 +1609,7 @@ class TestView(APIView):
 
 a. 自定义字段
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s6_serializers import TestView
@@ -1507,7 +1618,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1562,7 +1675,9 @@ class TestView(APIView):
 
         return Response('POST请求，响应内容')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s6_serializers import TestView
@@ -1571,7 +1686,9 @@ urlpatterns = [
     url(r'test/', TestView.as_view(), name='test'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1633,9 +1750,11 @@ class TestView(APIView):
 
         return Response('POST请求，响应内容')
 ```
+{% endraw %}
 
 c. 生成URL
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s6_serializers import TestView
@@ -1645,7 +1764,9 @@ urlpatterns = [
     url(r'detail/(?P<pk>\d+)/', TestView.as_view(), name='detail'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1708,11 +1829,13 @@ class TestView(APIView):
 
         return Response('POST请求，响应内容')
 ```
+{% endraw %}
 
 ### 7. 分页
 
 a. 根据页码进行分页
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -1722,7 +1845,9 @@ urlpatterns = [
     url(r'^test/', s9_pagination.UserViewSet.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1767,7 +1892,9 @@ class UserViewSet(APIView):
         response = paginator.get_paginated_response(serializer.data)
         return response
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s9_pagination
@@ -1776,7 +1903,9 @@ urlpatterns = [
     url(r'^test/', s9_pagination.UserViewSet.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1818,9 +1947,11 @@ class UserViewSet(APIView):
         response = paginator.get_paginated_response(serializer.data)
         return response
 ```
+{% endraw %}
 
 c. 游标分页
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s9_pagination
@@ -1829,7 +1960,9 @@ urlpatterns = [
     url(r'^test/', s9_pagination.UserViewSet.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1876,11 +2009,13 @@ class UserViewSet(APIView):
         response = paginator.get_paginated_response(serializer.data)
         return response
 ```
+{% endraw %}
 
 ### 8. 路由系统
 
 a. 自定义路由
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s11_render
@@ -1892,7 +2027,9 @@ urlpatterns = [
     url(r'^test/(?P<pk>[^/.]+)\.(?P<format>[a-z0-9]+)$', s11_render.TestView.as_view())
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -1905,7 +2042,9 @@ class TestView(APIView):
         print(self.renderer_classes)
         return Response('...')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s10_generic
@@ -1916,7 +2055,9 @@ urlpatterns = [
         {'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -1935,9 +2076,11 @@ class UserViewSet(ModelViewSet):
     queryset = models.UserInfo.objects.all()
     serializer_class = UserSerializer
 ```
+{% endraw %}
 
 c. 全自动路由
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -1951,7 +2094,9 @@ urlpatterns = [
     url(r'^', include(router.urls)),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import serializers
@@ -1968,11 +2113,13 @@ class UserViewSet(ModelViewSet):
     queryset = models.UserInfo.objects.all()
     serializer_class = UserSerializer
 ```
+{% endraw %}
 
 ### 9. 视图
 
 a. GenericViewSet
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views.s7_viewset import TestView
@@ -1982,7 +2129,9 @@ urlpatterns = [
     url(r'detail/(?P<pk>\d+)/', TestView.as_view({'get':'list'}), name='xxxx'),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2003,7 +2152,9 @@ class TestView(viewsets.GenericViewSet):
     def edit(self, request, *args, **kwargs):
         pass
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s10_generic
@@ -2014,7 +2165,9 @@ urlpatterns = [
         {'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2033,9 +2186,11 @@ class UserViewSet(ModelViewSet):
     queryset = models.UserInfo.objects.all()
     serializer_class = UserSerializer
 ```
+{% endraw %}
 
 c. ModelViewSet（rest framework路由）
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -2051,7 +2206,9 @@ urlpatterns = [
     url(r'^', include(router.urls)),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from rest_framework import viewsets
 from rest_framework import serializers
@@ -2083,6 +2240,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 ```
+{% endraw %}
 
 ### 10. 渲染器
 
@@ -2127,6 +2285,7 @@ a. json
 
 
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s11_render
@@ -2136,7 +2295,9 @@ urlpatterns = [
     url(r'^test\.(?P<format>[a-z0-9]+)', s11_render.TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2163,6 +2324,7 @@ class TestView(APIView):
         ser = TestSerializer(instance=user_list, many=True)
         return Response(ser.data)
 ```
+{% endraw %}
 
 访问URL：
 
@@ -2170,6 +2332,7 @@ class TestView(APIView):
 - http://127.0.0.1:8000/test.admin
 - http://127.0.0.1:8000/test/ 
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2196,6 +2359,7 @@ class TestView(APIView):
         ser = TestSerializer(instance=user_list, many=True)
         return Response(ser.data)
 ```
+{% endraw %}
 
 c. Form表单
 
@@ -2205,6 +2369,7 @@ c. Form表单
 - http://127.0.0.1:8000/test.form
 - http://127.0.0.1:8000/test/ 
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2233,6 +2398,7 @@ class TestView(APIView):
         ser = TestSerializer(instance=user_list, many=False)
         return Response(ser.data)
 ```
+{% endraw %}
 
 d. 自定义显示模板
 
@@ -2242,6 +2408,7 @@ d. 自定义显示模板
 - http://127.0.0.1:8000/test.html
 - http://127.0.0.1:8000/test/ 
 
+{% raw %}
 ```
 from django.conf.urls import url, include
 from web.views import s11_render
@@ -2251,7 +2418,9 @@ urlpatterns = [
     url(r'^test\.(?P<format>[a-z0-9]+)', s11_render.TestView.as_view()),
 ]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2277,7 +2446,9 @@ class TestView(APIView):
         ser = TestSerializer(instance=user_list, many=False)
         return Response(ser.data, template_name='user_detail.html')
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -2292,6 +2463,7 @@ class TestView(APIView):
 </body>
 </html>
 ```
+{% endraw %}
 
 e. 浏览器格式API+JSON
 
@@ -2301,6 +2473,7 @@ e. 浏览器格式API+JSON
 - http://127.0.0.1:8000/test.api
 - http://127.0.0.1:8000/test/ 
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -2333,5 +2506,6 @@ class TestView(APIView):
         ser = TestSerializer(instance=user_list, many=False)
         return Response(ser.data, template_name='user_detail.html')
 ```
+{% endraw %}
 
 注意：如果同时多个存在时，自动根据URL后缀来选择渲染器。

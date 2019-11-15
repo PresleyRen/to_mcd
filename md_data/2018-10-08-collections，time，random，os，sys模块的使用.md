@@ -4,7 +4,7 @@ title:      collections，time，random，os，sys模块的使用
 subtitle:   
 date:       2018-10-08
 author:     P
-header-img: img/post-bg-miui-ux.jpg
+header-img: img/post-bg-swift2.jpg
 catalog: true
 tags:
     - python
@@ -19,6 +19,7 @@ tags:
 
 二. collections模块:　　collections模块主要封装了了⼀一些关于集合类的相关操作. 比如, Iterable, Iterator等等. 除了了这些以外, collections还提供了了⼀一些除了了基本数据类型以外的数据集合类　　　　型. Counter, deque, OrderDict, defaultdict以及namedtuple1. Countercounter是⼀一个计数器. 主要⽤用来计数计算⼀一个字符串串中每个字符出现的次数:
 
+{% raw %}
 ```
 # 计算字符串中每个字符出现的次数
 s = "abcdefadsfasfasdfbadsfasdbfdasfdas" # 可迭代
@@ -33,6 +34,7 @@ c = Counter(s)  # 创来和字典差不多
 print(c)
 
 ```
+{% endraw %}
 
 　　
 
@@ -40,6 +42,7 @@ print(c)
 
 1. 栈: FILO. 先进后出 -> 砌墙的砖头, 老师傅做馒头2. 队列列: FIFO. 先进先出 -> 买火⻋车票排队, 所有排队的场景由于python没有给出Stack模块. 所以我们⾃自⼰己⼿手动写⼀一个粗略版本(注意, 此版本有严重的并发问题)
 
+{% raw %}
 ```
 # 装馒头的桶
 # 1. 入栈
@@ -69,9 +72,11 @@ class Stack:
         else:
             raise StackEmptyError("the stack is empty!")
 ```
+{% endraw %}
 
 　　def clear(self):　　　　self.lst.clear()　　　　self.index = 0　　def __sizeof__(self):　　　　return len(self.lst)　　def max(self):　　　　return self.size　　def now(self):　　　　return self.index
 
+{% raw %}
 ```
 # 使用
 # 1.实例化栈
@@ -90,11 +95,13 @@ s.push("馒头6")
 print(s.pop())
 
 ```
+{% endraw %}
 
 　　
 
 ★队列: python提供了queue模块. 使⽤用起来非常方便
 
+{% raw %}
 ```
 import queue
 q = queue.Queue()
@@ -106,11 +113,13 @@ print(q.get())
 print(q.get())
 print(q.get())
 ```
+{% endraw %}
 
 ◆注意. 如果队列里没有元素了. 再也就拿不出来元素了. 此时程序会阻塞.
 
 接下来, 我们来看一下deque,  ◇注意, 此队列是collections中的.
 
+{% raw %}
 ```
 from collections import deque
 
@@ -124,9 +133,11 @@ print(q)
 print(q.pop()) # 右侧删除
 print(q.popleft()) # 左侧删除
 ```
+{% endraw %}
 
 3. namedtuple 命名元组命名元组, 顾名思义. 给元组内的元素进行命名. 比如. 我们说(x, y) 这是⼀一个元组. 同时. 我们还可以认为这是⼀一个点坐标. 这时, 我们就可以使用namedtuple对元素进行命名
 
+{% raw %}
 ```
 from collections import namedtuple
 # 自己定义了了一个元组, 如果灵性够好, 这其实就是创建了一个类
@@ -137,9 +148,11 @@ print(p.x)
 print(p.y)
 
 ```
+{% endraw %}
 
 4. orderdict 和 defaultdict　　orderdict 顾名思义. 字典的key默认是无序的. 而OrderedDict是有序的
 
+{% raw %}
 ```
 dic = {'a':'娃哈哈', 'b':'薯条', 'c':'胡辣汤'}
 print(dic)
@@ -147,14 +160,18 @@ from collections import OrderedDict
 od = OrderedDict({'a':'娃哈哈', 'b':'薯条', 'c':'胡辣汤'})
 print(od)
 ```
+{% endraw %}
 
 ◎defaultdict: 可以给字典设置默认值. 当key不存在时. 直接获取默认值:from collections import defaultdict
 
+{% raw %}
 ```
 dd = defaultdict(list) # 默认值list
 print(dd['娃哈哈'])     # [] 当key不不存在的时候. 会自动执行行构造方法中传递的内容.
 ```
+{% endraw %}
 
+{% raw %}
 ```
 # 11 22 33 44 55 66 77 88 99
 lst = [11, 22, 33, 44, 55, 66, 77, 88, 99]
@@ -175,6 +192,7 @@ for el in lst:
 print(dd)
 
 ```
+{% endraw %}
 
 　　
 
@@ -182,10 +200,12 @@ print(dd)
 
 三. time 时间模块(重点)　　　时间模块是我们写程序的时候经常能用到. 比如, 如何计算时间差. 如何按照客户的要求展⽰示时间. 等等.
 
+{% raw %}
 ```
 import time
 print(time.time()) # 1538927647.483177 时间戳(系统时间) 
 ```
+{% endraw %}
 
 　　此时, 我们已经获取到了了系统时间, 但是这个时间....看不懂. 怎么办呢. 需要对时间进　　　　行格式化. 那这样就引出了了另⼀一种时间的格式. 在python中时间分成三种表现形式:
 
@@ -195,44 +215,53 @@ print(time.time()) # 1538927647.483177 时间戳(系统时间)
 
 那就需要对时间进行格式化操作.
 
+{% raw %}
 ```
 s = time.strftime("%Y-%m-%d %H:%M:%S")  # 必须记住
 print(s)
 ```
+{% endraw %}
 
 日期格式化的标准:%y 两位数的年份表示（00-99）%Y 四位数的年份表示（000-9999）%m 月份（01-12）%d 月内中的一天（0-31）%H 24小时制小时数（0-23）%I 12小时制小时数（01-12）%M 分钟数（00=59）%S 秒（00-59）%a 本地简化星期名称%A 本地完整星期名称%b 本地简化的月份名称%B 本地完整的月份名称%c 本地相应的日期表示和时间表示%j 年内的一天（001-366）%p 本地A.M.或P.M.的等价符%U 一年中的星期数（00-53）星期天为星期的开始%w 星期（0-6），星期天为星期的开始%W 一年中的星期数（00-53）星期一为星期的开始%x 本地相应的日期表示%X 本地相应的时间表示%Z 当前时区的名称%% %号本身
 
 看一下结构化时间:
 
+{% raw %}
 ```
 print(time.localtime())
 结果:
 time.struct_time(tm_year=2017, tm_mon=05, tm_mday=8, tm_hour=10, tm_min=24,tm_sec=42, tm_wday=0, tm_yday=126, tm_isdst=0)
 
 ```
+{% endraw %}
 
 　　
 
 　　好了. 先在看到的都是当前系统时间, 那如果碰到时间转换呢? 比如. 我们的数据库中存储了这样一个时间: 1888888888. 如何显示成xxxx年xx月xx日. 那时间的转化必须要记住: 所有的转化都要通过结构化时间来转化.
 
+{% raw %}
 ```
 t = time.localtime(1888888888) # 结构化时间
 s = time.strftime("%Y-%m-%d %H:%M:%S", t) # 格式化这个时间 f:format 格式化
 print(s)
 
 ```
+{% endraw %}
 
 　　那如果说, 我让用户输入一个时间, 怎么把它转化成我们数据库存储的时间戳呢? 还是要用到结构化时间:
 
+{% raw %}
 ```
 s = "2020-10-01 12:18:12"
 t = time.strptime(s, "%Y-%m-%d %H:%M:%S") # 转化成结构时间 p:parse 转换
 print(time.mktime(t)) # 转换成时间戳
 
 ```
+{% endraw %}
 
 计算时间差:
 
+{% raw %}
 ```
 import time
 true_time = time.mktime( time.strptime('2017-09-11 08:30:00','%Y-%m-%d %H:%M:%S'))
@@ -244,11 +273,13 @@ print('过去了%d年%d月%d天%d小时%d分钟%d秒'%(struct_time.tm_year-1970,
 struct_time.tm_min,struct_time.tm_sec))
 
 ```
+{% endraw %}
 
 　　
 
 四. random模块所有关于随机相关的内容都在random模块中.
 
+{% raw %}
 ```
 import random
 print(random.random())          # 0-1⼩小数
@@ -262,9 +293,11 @@ random.shuffle(lst)               # 随机打乱顺序
 print(lst)
 
 ```
+{% endraw %}
 
 五. os模块　　所有和操作系统相关的内容都在os模块
 
+{% raw %}
 ```
 os.makedirs('dirname1/dirname2') 可生成多层递归目录
 os.removedirs('dirname1') 若目录为空，则删除，并递归到上一级目录，如若也为空，则删除，依此类推
@@ -304,11 +337,13 @@ os.pathsep 输出用于分割文件路径的字符串 win下为;,Linux下为:
 os.name 输出字符串指示当前使用平台。win->'nt'; Linux->'posix'
 
 ```
+{% endraw %}
 
 　　
 
 os.stat() 属性解读:
 
+{% raw %}
 ```
 stat 结构:
 st_mode: inode 保护模式
@@ -324,11 +359,13 @@ st_ctime: 由操作系统报告的"ctime"。在某些系统上（如Unix）是�
 其它系统上（如Windows）是创建时间（详细信息参见平台的文档）。
 
 ```
+{% endraw %}
 
 　　
 
 六. sys模块所有和python解释器相关的都在sys模块.
 
+{% raw %}
 ```
 sys.argv 命令行参数List，第一个元素是程序本身路径
 sys.exit(n) 退出程序，正常退出时exit(0),错误退出sys.exit(1)
@@ -337,5 +374,6 @@ sys.path 返回模块的搜索路径，初始化时使用PYTHONPATH环境变量�
 sys.platform 返回操作系统平台名称
 
 ```
+{% endraw %}
 
 　　

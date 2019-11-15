@@ -4,7 +4,7 @@ title:      理解cookie，session，token
 subtitle:   
 date:       2019-04-08
 author:     P
-header-img: img/post-bg-universe.jpg
+header-img: img/post-bg-mma-5.jpg
 catalog: true
 tags:
     - python
@@ -169,9 +169,11 @@ Having our API just serve data, we can also make the design choice to serve asse
 
 只要用户有一个通过了验证的token，数据和资源就能够在任何域上被请求到。
 
+{% raw %}
 ```
 `          Access-Control-Allow-Origin: *       `
 ```
+{% endraw %}
 
 基于标准
 

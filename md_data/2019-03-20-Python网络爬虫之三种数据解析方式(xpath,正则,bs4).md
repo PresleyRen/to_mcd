@@ -4,7 +4,7 @@ title:      Python网络爬虫之三种数据解析方式(xpath,正则,bs4)
 subtitle:   
 date:       2019-03-20
 author:     P
-header-img: img/post-bg-os-metro.jpg
+header-img: img/post-bg-ioses.jpg
 catalog: true
 tags:
     - python
@@ -42,6 +42,7 @@ tags:
 
 - 常用正则表达式回顾：
 
+{% raw %}
 ```
 <code class="language-python hljs">   单字符：
         . : 除换行以外所有字符
@@ -73,9 +74,11 @@ tags:
 
     re.sub(正则表达式, 替换内容, 字符串)</code>
 ```
+{% endraw %}
 
 - 回顾练习：
 
+{% raw %}
 ```
 <code class="language-python hljs">import re
 #提取出python
@@ -124,6 +127,7 @@ string1 = """静夜思
 
 re.findall('.*',string1,re.S)</code>
 ```
+{% endraw %}
 
 <li>项目需求：爬取糗事百科指定页面的糗图，并将其保存到指定文件夹中
 <pre><code class="language-python hljs">#!/usr/bin/env python
@@ -169,6 +173,7 @@ if __name__ == "__main__":
 
 - 测试页面数据
 
+{% raw %}
 ```
 <code class="language-html hljs xml"><html lang="en">
 <head>
@@ -205,9 +210,11 @@ if __name__ == "__main__":
 </body>
 </html></code>
 ```
+{% endraw %}
 
 - 常用xpath表达式回顾
 
+{% raw %}
 ```
 <code class="language-python hljs">属性定位：
     #找到class属性值为song的div标签
@@ -229,9 +236,11 @@ if __name__ == "__main__":
 取属性：
     //div[@class="tang"]//li[2]/a/@href</code>
 ```
+{% endraw %}
 
 - 代码中使用xpath表达式进行数据解析：
 
+{% raw %}
 ```
 <code class="language-python hljs">1.下载：pip install lxml
 2.导包：from lxml import etree
@@ -244,6 +253,7 @@ if __name__ == "__main__":
 　　2.2 网络数据：tree = etree.HTML(网页内容字符串)
                 tree.xpath("xpath表达式")</code>
 ```
+{% endraw %}
 
 <li>安装xpath插件在浏览器中对xpath表达式进行验证：可以在插件中直接执行xpath表达式
 <ul>
@@ -257,6 +267,7 @@ if __name__ == "__main__":
 
 项目需求：获取好段子中段子的内容和作者   http://www.haoduanzi.com
 
+{% raw %}
 ```
 <code class="language-python hljs">from lxml import etree
 import requests
@@ -285,9 +296,11 @@ for ele in ele_div_list:
 print(title_list)
 print(text_list)</code>
 ```
+{% endraw %}
 
 ### 【重点】下载煎蛋网中的图片数据：[http://jandan.net/ooxx](http://jandan.net/ooxx)
 
+{% raw %}
 ```
 <code class="language-python hljs">import requests
 from lxml import etree
@@ -327,11 +340,13 @@ for url in imgUrl_list:
 
 </code>
 ```
+{% endraw %}
 
 ### 三.BeautifulSoup解析
 
 - 环境安装
 
+{% raw %}
 ```
 <code class="language-python hljs">- 需要将pip源设置为国内源，阿里源、豆瓣源、网易源等
    - windows
@@ -352,9 +367,11 @@ for url in imgUrl_list:
      bs4在使用时候需要一个第三方库，把这个库也安装一下
      pip install lxml</code>
 ```
+{% endraw %}
 
 - 基础使用
 
+{% raw %}
 ```
 <code class="language-python hljs">使用流程：       
     - 导包：from bs4 import BeautifulSoup
@@ -395,6 +412,7 @@ for url in imgUrl_list:
                 div > p > a > .lala          只能是下面一级
         【注意】select选择器返回永远是列表，需要通过下标提取指定的对象</code>
 ```
+{% endraw %}
 
 <li>需求：使用bs4实现将诗词名句网站中三国演义小说的每一章的内容爬去到本地磁盘进行存储   http://www.shicimingju.com/book/sanguoyanyi.html
 <pre><code class="language-python hljs">#!/usr/bin/env python

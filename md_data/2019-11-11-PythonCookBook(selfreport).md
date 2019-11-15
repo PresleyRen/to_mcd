@@ -4,7 +4,7 @@ title:      PythonCookBook(selfreport)
 subtitle:   
 date:       2019-11-11
 author:     P
-header-img: img/post-bg-desk.jpg
+header-img: img/post-bg-e2e-ux.jpg
 catalog: true
 tags:
     - python
@@ -19,6 +19,7 @@ tags:
 
 ### start expressions
 
+{% raw %}
 ```
 items = [1, 10, 7, 4, 5, 9] 
 def sum(items):
@@ -33,11 +34,13 @@ def sum(items):
 >>> sum(items)
 36
 ```
+{% endraw %}
 
 ### Deque
 
 Using deque(maxlen=N) creates a fixed-sized queue. When new items are added and the queue is full, the oldest item is automatically removed. 
 
+{% raw %}
 ```
 from collections import deque
 >>> q = deque(maxlen=3)
@@ -49,11 +52,13 @@ deque([1, 2, 3], maxlen=3)
 >>> q.append(4)
 >>> qdeque([1, 2, 3]) >>> q.appendleft(4) >>> q deque([4, 1, 2, 3]) >>> q.pop() 3 >>> q deque([4, 1, 2]) >>> q.popleft() 4 　
 ```
+{% endraw %}
 
 ★ Adding or popping items from either end of a queue has O(1) complexity. This is unlike a list where inserting or removing items from the front of the list is O(N).
 
 ### Heapq
 
+{% raw %}
 ```
 The heapq module has two functionsnlargest() and nsmallest()that do exactly what you want. For example:
 import heapq
@@ -73,7 +78,10 @@ portfolio = [
 cheap = heapq.nsmallest(3, portfolio, key=lambda s: s['price'])
 expensive = heapq.nlargest(3, portfolio, key=lambda s: s['price'])
 ```
+{% endraw %}
 
+{% raw %}
 ```
 声明：如果涉及侵权请联系本人删除，谢谢~
 ```
+{% endraw %}

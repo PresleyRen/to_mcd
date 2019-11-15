@@ -4,7 +4,7 @@ title:      【python】--GIL锁、线程锁（互斥锁）、递归锁（RLock�
 subtitle:   
 date:       2019-10-14
 author:     P
-header-img: img/post-bg-android.jpg
+header-img: img/post-bg-coffee.jpeg
 catalog: true
 tags:
     - python

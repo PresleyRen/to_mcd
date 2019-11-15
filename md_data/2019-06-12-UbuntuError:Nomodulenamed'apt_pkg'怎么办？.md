@@ -4,7 +4,7 @@ title:      UbuntuError:Nomodulenamed'apt_pkg'怎么办？
 subtitle:   
 date:       2019-06-12
 author:     P
-header-img: img/post-bg-mma-0.png
+header-img: img/post-bg-unix-linux.jpg
 catalog: true
 tags:
     - python

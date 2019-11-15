@@ -4,7 +4,7 @@ title:      Flask-Migrate
 subtitle:   
 date:       2019-04-11
 author:     P
-header-img: img/post-bg-cook.jpg
+header-img: img/post-bg-swift.jpg
 catalog: true
 tags:
     - python
@@ -23,12 +23,15 @@ tags:
 
 ### 1.安装 Flask-Migrate
 
+{% raw %}
 ```
 pip install Flask-Migrate
 ```
+{% endraw %}
 
 ### 2.将 Flask-Migrate 加入到 Flask 项目中 - **PS: 注意了 Flask-Migrate 是要依赖 Flask-Script 组件的**
 
+{% raw %}
 ```
  1 import MyApp
  2 # 导入 Flask-Script 中的 Manager
@@ -69,12 +72,15 @@ pip install Flask-Migrate
 37     # 替换原有的app.run(),然后大功告成了
 38     manager.run()
 ```
+{% endraw %}
 
 ### 3.执行数据库初始化指令
 
+{% raw %}
 ```
 python manager.py db init
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1122946/201902/1122946-20190212170518784-240870796.png" alt="" />
 

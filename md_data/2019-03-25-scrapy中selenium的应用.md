@@ -4,7 +4,7 @@ title:      scrapy中selenium的应用
 subtitle:   
 date:       2019-03-25
 author:     P
-header-img: img/post-bg-rwd.jpg
+header-img: img/post-bg-hacker.jpg
 catalog: true
 tags:
     - python
@@ -34,6 +34,7 @@ tags:
 
 - 爬虫文件：
 
+{% raw %}
 ```
 <code class="language-python hljs">class WangyiSpider(RedisSpider):
     name = 'wangyi'
@@ -48,9 +49,11 @@ tags:
         print('爬虫结束')
         self.bro.quit()</code>
 ```
+{% endraw %}
 
 - 中间件文件：
 
+{% raw %}
 ```
 <code class="language-python hljs">from scrapy.http import HtmlResponse    
     #参数介绍：
@@ -72,12 +75,15 @@ tags:
         else:
             return response</code>
 ```
+{% endraw %}
 
 - 配置文件：
 
+{% raw %}
 ```
 <code class="language-python hljs">DOWNLOADER_MIDDLEWARES = {
     'wangyiPro.middlewares.WangyiproDownloaderMiddleware': 543,
 
 }</code>
 ```
+{% endraw %}

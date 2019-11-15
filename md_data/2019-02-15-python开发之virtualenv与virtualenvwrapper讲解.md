@@ -4,7 +4,7 @@ title:      python开发之virtualenv与virtualenvwrapper讲解
 subtitle:   
 date:       2019-02-15
 author:     P
-header-img: img/post-bg-swift.jpg
+header-img: img/post-bg-desk.jpg
 catalog: true
 tags:
     - python
@@ -21,13 +21,16 @@ tags:
 
 # 一、Linux下安装、配置virtualenv
 
+{% raw %}
 ```
 #指定清华源下载pip的包
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple virtualenv
 #升级pip工具
 pip3 install --upgrade pip
 ```
+{% endraw %}
 
+{% raw %}
 ```
 1.安装virtualenv
 pip3 install virtualenv 
@@ -46,15 +49,19 @@ deactivate命令
 7.
 virtualenv是如何创建独立的Python运行环境的呢？原理很简单，就是把系统Python复制一份到virtualenv的环境，用命令source venv/bin/activate进入一个virtualenv环境时，virtualenv会修改相关环境变量，让命令python和pip均指向当前的virtualenv环境。
 ```
+{% endraw %}
 
 ## 二、确保开发环境的一致性
 
+{% raw %}
 ```
 1.假设我们在本地开发环境，准备好了项目+依赖包环境
 2.现在需要将项目上传至服务器，上线发布
 3.那么就要保证服务器的python环境一致性
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <strong>解决方案：
 1</strong>**.通过命令保证环境的一致性，导出当前python环境的包**
@@ -66,6 +73,7 @@ pip3 freeze > requirements.txt
 **2****.上传至服务器后，在服务器下创建virtualenv，在venv中导入项目所需的模块依赖**
 pip3 install -r requirements.txt
 ```
+{% endraw %}
 
 #  三、虚拟环境之virtualenvwrapper
 
@@ -80,12 +88,15 @@ pip3 install -r requirements.txt
 
 ## 步骤1：安装virtualenvwrapper
 
+{% raw %}
 ```
 pip3 install virtualenvwrapper
 ```
+{% endraw %}
 
 ## 步骤2：设置Linux的环境变量，每次启动就加载virtualenvwrapper
 
+{% raw %}
 ```
 把下面两行代码添加到 ~/.bashrc文件中
 打开文件
@@ -98,9 +109,11 @@ source /opt/python34/bin/virtualenvwrapper.sh #执行virtualenvwrapper安装脚�
 读取文件，使得生效，此时已经可以使用virtalenvwrapper
 source ~/.bashrc
 ```
+{% endraw %}
 
 ## 步骤3：基本使用virtualenvwrapper
 
+{% raw %}
 ```
 创建一个虚拟环境：
 $ mkvirtualenv my_django115
@@ -127,9 +140,11 @@ deactivate
 删除虚拟环境，需要先退出虚拟环境
 rmvirtualenv my_django115
 ```
+{% endraw %}
 
 ## 步骤四：常用其他命令
 
+{% raw %}
 ```
 lsvirtualenv
 列举所有的环境。
@@ -140,6 +155,7 @@ cdsitepackages
 lssitepackages
 显示 site-packages 目录中的内容。完整官网介绍：https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html
 ```
+{% endraw %}
 
 ## 图解
 

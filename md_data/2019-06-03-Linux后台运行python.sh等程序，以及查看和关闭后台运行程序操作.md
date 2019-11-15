@@ -4,7 +4,7 @@ title:      Linux后台运行python.sh等程序，以及查看和关闭后台运
 subtitle:   
 date:       2019-06-03
 author:     P
-header-img: img/home-bg-geek.jpg
+header-img: img/post-bg-miui6.jpg
 catalog: true
 tags:
     - python
@@ -15,15 +15,19 @@ tags:
 
 （1）&命令
 
+{% raw %}
 ```
 `      功能：加在一个命令的最后，可以把这个命令放在后台执行`
 ```
+{% endraw %}
 
 （2）nohup命令
 
+{% raw %}
 ```
 `      功能：不挂断的运行命令`
 ```
+{% endraw %}
 
 2、查看当前后台运行的命令
 
@@ -31,6 +35,7 @@ tags:
 
 （1）jobs命令
 
+{% raw %}
 ```
 <code class="has-numbering" onclick="mdcp.signin(event)">    功能：查看当前终端后台运行的任务
 
@@ -38,11 +43,13 @@ tags:
 
    jobs -l选项可显示当前终端所有任务的PID，jobs的状态可以是running，stopped，Terminated。+ 号表示当前任务，- 号表示后一个任务。</code>
 ```
+{% endraw %}
 
  
 
 （2）ps命令
 
+{% raw %}
 ```
 <code class="has-numbering" onclick="mdcp.signin(event)">      功能：查看当前的所有进程
 
@@ -50,11 +57,13 @@ tags:
 
      ps -aux | grep "test.sh"    #a:显示所有程序  u:以用户为主的格式来显示   x:显示所有程序，不以终端机来区分</code>
 ```
+{% endraw %}
 
  
 
 3、关闭当前后台运行的命令
 
+{% raw %}
 ```
 <code class="has-numbering" onclick="mdcp.signin(event)">  kill命令：结束进程
 
@@ -64,11 +73,13 @@ tags:
 
    如果是前台进程的话，直接执行 Ctrl+c 就可以终止了</code>
 ```
+{% endraw %}
 
  
 
 4、前后台进程的切换与控制
 
+{% raw %}
 ```
 <code class="has-numbering" onclick="mdcp.signin(event)"> （1）fg命令
 
@@ -86,17 +97,20 @@ tags:
 
    如果后台中有多个命令，可以先用jobs查看jobnum，然后用 bg %jobnum 将选中的命令调出继续执行。</code>
 ```
+{% endraw %}
 
  
 
 5、运行Python示例
 
+{% raw %}
 ```
 <code class="has-numbering" onclick="mdcp.signin(event)">[root@xxxxx nlp]# nohup python -u jbabs.py > out.log 2>&1 &
 [1] 20087
 [root@xxxxx nlp]# jobs
 [1]+  Running                 nohup python -u jbabs.py > out.log 2>&1 &</code>
 ```
+{% endraw %}
 
  
 
@@ -141,6 +155,8 @@ $ ps aux|grep pythontomener 1885  0.1  0.4  13120  4528 pts/0    S    15:48   0:
 
 **所以改正命令，就可以正常使用了**
 
+{% raw %}
 ```
 `$ nohup python3 -u test.py > out.log 2>&1 &在当前shell 里查看后台任务：jobs把后台的任务拉到前台运行：　　fg %任务号 默认任务1使用 crl + z 是任务暂停并挂载到后台使用 bg %任务号 使任务在后台运行`
 ```
+{% endraw %}

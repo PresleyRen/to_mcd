@@ -4,7 +4,7 @@ title:      Flask中的蓝图(BluePrint)
 subtitle:   
 date:       2019-03-17
 author:     P
-header-img: img/post-bg-coffee.jpeg
+header-img: img/post-bg-os-metro.jpg
 catalog: true
 tags:
     - python
@@ -25,6 +25,7 @@ tags:
 
 <img src="https://images2018.cnblogs.com/blog/1122946/201807/1122946-20180705135617382-1292374835.png" alt="" />
 
+{% raw %}
 ```
 from flask import Blueprint  # 导入 Flask 中的蓝图 Blueprint 模块
 
@@ -35,9 +36,11 @@ sv = Blueprint("sv", __name__)  # 实例化一个蓝图(Blueprint)对象
 def view_list():
     return "svlist_view_list"
 ```
+{% endraw %}
 
 manager.py 文件中的内容
 
+{% raw %}
 ```
 from flask import Flask
 
@@ -52,6 +55,7 @@ app.register_blueprint(s_view.sv)
 app.run("0.0.0.0",5000)
 # 现在Flask对象中并没有写任何的路由和视图函数
 ```
+{% endraw %}
 
 开启服务,然后访问 http://127.0.0.1:5000/svlist 查看结果
 
@@ -69,6 +73,7 @@ app.run("0.0.0.0",5000)
 
 这是目录结构
 
+{% raw %}
 ```
 from flask import Blueprint  # 导入 Flask 中的蓝图 Blueprint 模块
 from flask import render_template
@@ -84,7 +89,9 @@ sv = Blueprint("sv",
 def view_list():
     return render_template("svlist.html")
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +105,7 @@ def view_list():
 </body>
 </html> 
 ```
+{% endraw %}
 
 打开页面看结果
 
@@ -115,6 +123,7 @@ def view_list():
 
 要有一个文件存放我们的原始数据
 
+{% raw %}
 ```
 STUDENT = [
     {'id': 1, 'name': 'Old', 'age': 38, 'gender': '中'},
@@ -122,6 +131,7 @@ STUDENT = [
     {'id': 3, 'name': 'EDU', 'age': 84, 'gender': '女'}
 ]
 ```
+{% endraw %}
 
 然后我们根据以上内容进行增删改查
 
@@ -131,6 +141,7 @@ STUDENT = [
 
 __init__.py 文件中的内容:
 
+{% raw %}
 ```
 from flask import Flask
 
@@ -140,11 +151,13 @@ def create_app():
 
     return app
 ```
+{% endraw %}
 
 这个文件我们会修改函数 create_app中的代码
 
 manager.py 文件中的内容
 
+{% raw %}
 ```
 from student import create_app
 
@@ -152,6 +165,7 @@ flask_app = create_app()
 
 flask_app.run("0.0.0.0",5000)
 ```
+{% endraw %}
 
 通过这种方式启动 Flask 程序
 
@@ -159,6 +173,7 @@ flask_app.run("0.0.0.0",5000)
 
 <img src="https://images2018.cnblogs.com/blog/1122946/201807/1122946-20180705153716822-1307854308.png" alt="" />
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -193,7 +208,9 @@ flask_app.run("0.0.0.0",5000)
 </body>
 </html>
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from flask import Blueprint
 from flask import render_template
@@ -206,7 +223,9 @@ ss_blueprint = Blueprint("ss_b", __name__, template_folder="html", static_folder
 def s_list():
     return render_template("s_list.html", student=STUDENT)
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from flask import Flask
 from student_select import stu_select
@@ -219,6 +238,7 @@ def create_app():
 
     return app
 ```
+{% endraw %}
 
 赶紧运行一下manager.py 来访问一下,我们的成果
 
@@ -230,6 +250,7 @@ def create_app():
 
 <img src="https://images2018.cnblogs.com/blog/1122946/201807/1122946-20180705154342878-514832894.png" alt="" />
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -249,7 +270,9 @@ def create_app():
 </body>
 </html>
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from flask import Blueprint
 from flask import redirect
@@ -276,9 +299,11 @@ def s_add_view():
 
     return render_template("s_add.html")
 ```
+{% endraw %}
 
 这里面我们让他添加完一个学生,就返回到s_list查看学生列表
 
+{% raw %}
 ```
 from flask import Flask
 from student_select import stu_select
@@ -293,6 +318,7 @@ def create_app():
 
     return app
 ```
+{% endraw %}
 
 如果你要是重新启动服务了,那么你刚刚添加的学生信息就没有了
 
@@ -308,6 +334,7 @@ def create_app():
 
 <img src="https://images2018.cnblogs.com/blog/1122946/201807/1122946-20180705161441223-146949071.png" alt="" />
 
+{% raw %}
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -327,7 +354,9 @@ def create_app():
 </body>
 </html>
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from flask import Blueprint
 from flask import render_template
@@ -361,7 +390,9 @@ def s_update_view(nid):
 
     return render_template("s_update.html", student="")
 ```
+{% endraw %}
 
+{% raw %}
 ```
 from flask import Flask
 from student_select import stu_select
@@ -378,6 +409,7 @@ def create_app():
 
     return app
 ```
+{% endraw %}
 
 试一下结果:
 
@@ -393,6 +425,7 @@ def create_app():
 
 如图,这就是我们建立好的一个目录结构,一层一层的看一下,首先是app目录,它就是我们的主应用程序目录了在这里面有一个__init__.py这个文件里面的内容如下
 
+{% raw %}
 ```
  1 from flask import Flask
  2 from .views.auto import auto_bp
@@ -407,6 +440,7 @@ def create_app():
 11 
 12     return my_app
 ```
+{% endraw %}
 
 由此见得__init__.py就是构建app的一个函数,并且将views中的似乎是蓝图的东西注册进去了
 
@@ -416,6 +450,7 @@ def create_app():
 
 views目录,主角终于登场了,这里存放的就是视图函数文件,也就是我们Blueprint,每一个文件就是一个Blueprint
 
+{% raw %}
 ```
 1 from flask import Blueprint
 2 
@@ -425,7 +460,9 @@ views目录,主角终于登场了,这里存放的就是视图函数文件,也就
 6 def auto_func():
 7     return "my_app.auto"
 ```
+{% endraw %}
 
+{% raw %}
 ```
 1 from flask import Blueprint
 2 
@@ -435,9 +472,11 @@ views目录,主角终于登场了,这里存放的就是视图函数文件,也就
 6 def motor_func():
 7     return "my_app.motor"
 ```
+{% endraw %}
 
 这样目录结构就完成了,接下来就是关键性的一个文件manager.py项目的启动文件
 
+{% raw %}
 ```
 1 from app import create_app
 2 my_app = create_app()
@@ -445,6 +484,7 @@ views目录,主角终于登场了,这里存放的就是视图函数文件,也就
 4 if __name__ == '__main__':
 5     my_app.run()
 ```
+{% endraw %}
 
 以上就是我们Flask小型应用的项目结构目录了,要牢记哦
 

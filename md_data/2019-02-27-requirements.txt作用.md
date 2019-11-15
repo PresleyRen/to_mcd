@@ -4,7 +4,7 @@ title:      requirements.txt作用
 subtitle:   
 date:       2019-02-27
 author:     P
-header-img: img/post-bg-e2e-ux.jpg
+header-img: img/post-bg-mma-2.jpg
 catalog: true
 tags:
     - python

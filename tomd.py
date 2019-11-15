@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 __all__ = ['Tomd', 'convert']
@@ -17,7 +16,7 @@ MARKDOWN = {
     'blockquote': ('\n> ', '\n'),
     'em': ('**', '**'),
     'strong': ('**', '**'),
-    'block_code': ('\n```\n', '\n```\n'),
+    'block_code': ('\n{% raw %}\n```\n', '\n```\n{% endraw %}\n'),
     'span': ('', ''),
     'p': ('\n', '\n'),
     'p_with_out_class': ('\n', '\n'),

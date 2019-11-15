@@ -4,7 +4,7 @@ title:      Django之ORM
 subtitle:   
 date:       2019-01-22
 author:     P
-header-img: img/post-bg-android.jpg
+header-img: img/post-bg-e2e-ux.jpg
 catalog: true
 tags:
     - python
@@ -85,18 +85,22 @@ ORM只是一种工具，工具确实能解决一些重复，简单的劳动。�
 
 注：数据库迁移的时候出现一个警告
 
+{% raw %}
 ```
 WARNINGS: 
 ?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default'
 HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it.
 ```
+{% endraw %}
 
 在配置中多加一个OPTIONS参数：[Django官网解释](https://docs.djangoproject.com/en/1.11/ref/databases/#setting-sql-mode)
 
+{% raw %}
 ```
  'OPTIONS': {
     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
 ```
+{% endraw %}
 
 ### Model
 
@@ -162,6 +166,7 @@ auto_now和auto_now_add和default参数是互斥的，不能同时设置。
 
 字段类型，详情可点击查询[官网](https://docs.djangoproject.com/en/1.11/ref/models/fields/#field-types)。
 
+{% raw %}
 ```
     AutoField(Field)
         - int自增列，必须填入参数 primary_key=True
@@ -280,11 +285,13 @@ auto_now和auto_now_add和default参数是互斥的，不能同时设置。
     BinaryField(Field)
         - 二进制类型
 ```
+{% endraw %}
 
 ### 自定义字段
 
 自定义一个二进制字段，以及Django字段与数据库字段类型的对应关系。
 
+{% raw %}
 ```
 class UnsignedIntegerField(models.IntegerField):
     def db_type(self, connection):
@@ -319,6 +326,7 @@ class UnsignedIntegerField(models.IntegerField):
     'TimeField': 'time',
     'UUIDField': 'char(32)',
 ```
+{% endraw %}
 
 自定义一个char类型字段：
 <td class="gutter">12345678910111213</td><td class="code">`class` `MyCharField(models.Field):``    ``"""``    ``自定义的char类型的字段类``    ``"""``    ``def` `__init__(``self``, max_length, ``*``args, ``*``*``kwargs):``        ``self``.max_length ``=` `max_length``        ``super``(MyCharField, ``self``).__init__(max_length``=``max_length, ``*``args, ``*``*``kwargs)` `    ``def` `db_type(``self``, connection):``        ``"""``        ``限定生成数据库表的字段类型为char，长度为max_length指定的值``        ``"""``        ``return` `'char(%s)'` `%` `self``.max_length`</td>
@@ -348,6 +356,7 @@ class UnsignedIntegerField(models.IntegerField):
 
 进阶操作
 
+{% raw %}
 ```
 # 获取个数
 #
@@ -446,9 +455,11 @@ class UnsignedIntegerField(models.IntegerField):
 # Event.objects.filter(time__second=2)
 # Event.objects.filter(timestamp__second__gte=31)
 ```
+{% endraw %}
 
 高级操作
 
+{% raw %}
 ```
 # extra
 # 在QuerySet的基础上继续执行子语句
@@ -488,9 +499,11 @@ models.UserInfo.objects.extra(
 # cursor.execute("""SELECT * from auth_user where id = %s""", [1])
 # row = cursor.fetchone()
 ```
+{% endraw %}
 
 QuerySet相关方法
 
+{% raw %}
 ```
 ##################################################################
 # PUBLIC METHODS THAT ALTER ATTRIBUTES AND RETURN A NEW QUERYSET #
@@ -700,3 +713,4 @@ def exists(self):
 
 其他操作
 ```
+{% endraw %}

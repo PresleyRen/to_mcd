@@ -4,13 +4,14 @@ title:      websocket工作原理
 subtitle:   
 date:       2019-04-11
 author:     P
-header-img: img/post-bg-ioses.jpg
+header-img: img/post-bg-cook.jpg
 catalog: true
 tags:
     - python
 ---
 自己写一个websocket(教学用)
 
+{% raw %}
 ```
  1 import socket, base64, hashlib
  2 
@@ -95,9 +96,11 @@ tags:
 81     msg = conn.recv(8096)
 82     print(msg)
 ```
+{% endraw %}
 
 解密:
 
+{% raw %}
 ```
  1 # b'\x81\x83\xceH\xb6\x85\xffz\x85'
  2 
@@ -141,9 +144,11 @@ tags:
 40 
 41 print(str_byte.decode("utf8"))
 ```
+{% endraw %}
 
 加密:
 
+{% raw %}
 ```
  1 import struct
  2 msg_bytes = "hello".encode("utf8")
@@ -161,3 +166,4 @@ tags:
 14 
 15 print(msg)
 ```
+{% endraw %}

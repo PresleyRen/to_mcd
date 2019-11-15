@@ -4,7 +4,7 @@ title:      python爬虫执行js代码-execjs
 subtitle:   
 date:       2019-10-28
 author:     P
-header-img: img/post-bg-universe.jpg
+header-img: img/home-bg-geek.jpg
 catalog: true
 tags:
     - python
@@ -17,12 +17,14 @@ tags:
 
 ## 二.简单的使用
 
+{% raw %}
 ```
 <code class="hljs">import execjs
 
 js_obj = execjs.compile('js字符串')
 js_obj.call('js字符串中方法',参数)</code>
 ```
+{% endraw %}
 
 ## 三.js字符串中模拟浏览器环境
 
@@ -34,12 +36,15 @@ js_obj.call('js字符串中方法',参数)</code>
 
 ### 二.导入包
 
+{% raw %}
 ```
 `js_obj = execjs.compile('js字符串',cwd='node_modules')`
 ```
+{% endraw %}
 
 ### 三.js字符串中添加抬头
 
+{% raw %}
 ```
 <code class="hljs">const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -48,13 +53,17 @@ window = dom.window;
 document = window.document;
 XMLHttpRequest = window.XMLHttpRequest;</code>
 ```
+{% endraw %}
 
 ### 四.其它方案
 
+{% raw %}
 ```
 `使用PhantomJS之前，需要下载它的[驱动](http://phantomjs.org/download.html)，然后放下Python代码统一目录下。对之前的Python代码也进行修改：`
 ```
+{% endraw %}
 
+{% raw %}
 ```
 import execjs
  
@@ -67,9 +76,11 @@ js_encode = 'getParam()'
 params = ctx.eval(js_encode)
 print(params)
 ```
+{% endraw %}
 
 模拟浏览器用的selenium和chrome的webDriver（效率高点，可以自打开一个浏览器（都调用一个webdriver对象）），代码如下：
 
+{% raw %}
 ```
 from selenium import webdriver
  
@@ -78,7 +89,10 @@ with open('eleme.js', 'r') as f:
     js = f.read()
 print(browser.execute_script(js))
 ```
+{% endraw %}
 
+{% raw %}
 ```
 ` `
 ```
+{% endraw %}

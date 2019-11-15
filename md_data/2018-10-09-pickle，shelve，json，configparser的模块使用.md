@@ -4,7 +4,7 @@ title:      pickle，shelve，json，configparser的模块使用
 subtitle:   
 date:       2018-10-09
 author:     P
-header-img: img/post-bg-android.jpg
+header-img: img/post-bg-digital-native.jpg
 catalog: true
 tags:
     - python
@@ -17,14 +17,19 @@ tags:
 
 二. picklepickle用起来很简单. 说白了. 就是把我们的python对象写入到文件中的一种解决方案.但是写入到文件的是bytes. 所以这东西不是给人看的. 是给机器看的.
 
+{% raw %}
 ```
 import pickle
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #  dumps 序列化。 把对象转化成bytes#  loads 反序列化。 把bytes转化成对象#  dump 序列化。 把对象转化成bytes并写入文件#  load 反序列化。把文件中的bytes读取。转化成对象
 ```
+{% endraw %}
 
+{% raw %}
 ```
 class Cat:
     def __init__(self, name, age):
@@ -41,9 +46,11 @@ print(bs)                      # 一堆二进制. 看不懂
 cc = pickle.loads(bs)      # 把二进制反序列化成我们的对象
 cc.catchMouse()             # 猫依然是猫. 还可以抓老鼠    
 ```
+{% endraw %}
 
 　　★pickle中的dumps可以序列化一个对象. loads可以反序列化一个对象. 我们使用dump还可以直接 把一个对象写入到文件中:
 
+{% raw %}
 ```
 # f = open("cat", mode="wb")
 # pickle.dump(c, f) # 写入到文件中
@@ -53,9 +60,11 @@ f = open("cat", mode="rb")
 cc = pickle.load(f) # 从文件中读取对象
 cc.catchMouse()
 ```
+{% endraw %}
 
 　　★pickle还⽀支持多个对象的写出:
 
+{% raw %}
 ```
 #1.lst = [Cat("jerry", 19), Cat("tommy", 20), Cat("alpha", 21)]
 
@@ -69,25 +78,33 @@ for i in range(len(lst)):
     cc = pickle.load(f) # 从文件中读取对象
     cc.catchMouse()#+2.lst = [Cat("猫1", 10), Cat("猫2", 9), Cat("猫3", 8), Cat("猫4", 7), Cat("猫5", 6)]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 f = open("pickle-test", mode="wb")pickle.dump(lst, f)for el in lst:    pickle.dump(el, f)f.flush()f.close()
 ```
+{% endraw %}
 
 　　◆但是这样写并不够好. 因为读的时候. 并不能知道有多少对象要读. 这里记住, 不能一行一行的读. 那真的要写入或者读取多个内容怎么办? 很简单. 装lis里. 然后读取和写入都用list
 
+{% raw %}
 ```
 lst = [Cat("jerry", 19), Cat("tommy", 20), Cat("alpha", 21)]
 ```
+{% endraw %}
 
+{% raw %}
 ```
 f = open("pickle-test", mode="rb")while 1:    try:        c1 = pickle.load(f)        c1.catchMouse()    except EOFError:        break
 ```
+{% endraw %}
 
 　　记住一点, pickle序列化的内容是二进制的内容(bytes) 不是给人看的.
 
 三. shelveshelve提供python的 >>>持久化<<< 操作. 什么叫持久化操作呢? 说白话,就是把数据写到硬盘上.在操作shelve的时候非常的像操作一个字典. 这个东西到后期. 就像redis差不多.
 
+{% raw %}
 ```
 import shelve
 
@@ -96,9 +113,11 @@ shelf = shelve.open("sylar")
 print(shelf['jay'])
 shelf.close()s = shelve.open("sylar")# s["jay"] = {"name":"周杰伦", "age":18, "hobby":"哄小孩"}print(s['jay'])s.close()# 但是, 有坑s = shelve.open("sylar")s['jay']['name'] = "胡辣汤"      # 尝试改变字典中的数据s.close()s = shelve.open("sylar")print(s['jay'])              # 并没有改变s.close()# 解决方案:s = shelve.open("sylar", writeback=True)s['jay']['name'] = "胡辣汤"        # 尝试改变字典中的数据s.close()s = shelve.open("sylar")print(s['jay'])             # 改变了.s.close()
 ```
+{% endraw %}
 
 　　★ writeback=True 可以动态的把我们修改的信息写入到文件中. 而且还可以删除数据. 就像字典一样. 上一波操作:
 
+{% raw %}
 ```
 s = shelve.open("sylar", writeback=True)
 del s['jay']
@@ -120,11 +139,13 @@ for k, v in s.items():    # 像字典一样操作
 　　print(k, v)
 s.close()
 ```
+{% endraw %}
 
 　　综上 shelve 就当成字典来用就行了. 它比redis还简单.......
 
 四.                     ★☆★ ☆           json              ☆★☆★　　json是我们前后端交互的枢纽. 相当于编程界的普通话. 大家沟通都用json. 为么这样呢? 因为json的语法格式可以完美的表示出一个对象. 那么是json: json 全称 >>>javascript object notation . 翻译过来叫js对象简谱. 很复杂是吧? 来上一段简单的代码:
 
+{% raw %}
 ```
 wf = {
     "name":"汪峰",
@@ -137,9 +158,11 @@ wf = {
        }
 }
 ```
+{% endraw %}
 
 这个不是字典么? 对的. 在python里这叫字典. 但是在javascript里这叫 json. 一模一样的. 我们发现用这样的数据结构可以完美的表示出任何对象. 并且可以完整的把对象表示出来. 只要代码格式比较好. 那可读性也是很强的. 所以大家公认用这样一种数据结构作为数据交互的格式. 那在这个东西之前是什么呢? XML.....来看⼀一段代码
 
+{% raw %}
 ```
 <?xml version="1.0" encoding="utf-8" ?>
 <wf>
@@ -157,9 +180,11 @@ wf = {
     </wife>
 </wf> 
 ```
+{% endraw %}
 
 　　古人(老程序员)都是用这样的数据进行传输的. 先不管这个东西好不好看. 这玩意想要解析.. 那简直了. 想死的心都有. 所以老版本的xml在维护和处理理上是非常复杂和繁琐的. 以前的项目几乎没有用ajax的.　　那json既然这么牛B好⽤用. 怎么用呢? 注意. 这里又出来一个新问题. 我们的程序是在python⾥里写的. 但是前端是在JS那边来解析json的. 所以. 我们需要把我们程序产生的字典转化成json格式的json串(字符串). 然后网络传输. 那边接收到了之后. 它爱怎么处理是它的事情. 那, 如何把字典转化成我们的json格式的字符串呢?很简单, 上代码:
 
+{% raw %}
 ```
 import json
 dic = {"a": "女王", "b": "萝莉", "c": "小清新"}
@@ -200,17 +225,23 @@ import json
 lst = [{"a": 1}, {"b": 2}, {"c": 3}]
 # 写入的时候# 1. 循环# 2. 用dumps把字典转化成字符串， 然后手工在后面加一个\n# 3. 写出f = open("test.json", mode="w", encoding="utf-8") for el in lst: 　　　　s = json.dumps(el, ensure_ascii=True) + "\n" 　　f.write(s) f.close()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 # 读取的时候# 1. for line in f:# 2. strip()去掉空白# 3. loads()变成字典
 ```
+{% endraw %}
 
+{% raw %}
 ```
 f = open("test.json", mode="r", encoding="utf-8") for line in f: 　　dic = json.loads(line.strip())　　print(dic)f.close()
 ```
+{% endraw %}
 
 五. configparser模块该模块适用于配置文件的格式与windows ini文件类似，可以包含一个或多个节(section)每个节可以有多个参数(键=值).
 
+{% raw %}
 ```
 [DEFAULT]
 ServerAliveInterval = 45
@@ -288,5 +319,6 @@ config.remove_option("168-DB", "u_name")
 config.write(open("db.ini", mode="w"))
 
 ```
+{% endraw %}
 
 　　

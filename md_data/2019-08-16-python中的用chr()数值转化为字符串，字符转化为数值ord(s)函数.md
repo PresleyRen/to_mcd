@@ -4,7 +4,7 @@ title:      python中的用chr()数值转化为字符串，字符转化为数值
 subtitle:   
 date:       2019-08-16
 author:     P
-header-img: img/post-bg-digital-native.jpg
+header-img: img/post-bg-android.jpg
 catalog: true
 tags:
     - python

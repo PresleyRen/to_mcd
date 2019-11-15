@@ -4,7 +4,7 @@ title:      python获取linux系统内存、cpu、网络使用情况
 subtitle:   
 date:       2019-07-08
 author:     P
-header-img: img/post-bg-e2e-ux.jpg
+header-img: img/post-bg-mma-1.jpg
 catalog: true
 tags:
     - python
@@ -61,6 +61,7 @@ procs_blocked行中包含了目前被阻塞的任务的个数
 
 知道了/proc文件的内容之后就可以计算cpu的利用率了，具体方法是：先在t1时刻读取文件内容，获得此时cpu的运行情况，然后等待一段时间在t2时刻再次读取文件内容，获取cpu的运行情况，然后根据两个时刻的数据通过以下方式计算cpu的利用率：100 - (idle2 - idle1)*100/(total2 - total1),其中total = user + system + nice + idle + iowait + irq + softirq。python代码实现如下：
 
+{% raw %}
 ```
 import time
            
@@ -123,6 +124,7 @@ if __name__ == '__main__':
     print calcCpuUsage(counters1, counters2):
 
 ```
+{% endraw %}
 
 　　
 
@@ -132,6 +134,7 @@ if __name__ == '__main__':
 
 <img src="http://m3.img.srcdd.com/farm4/d/2013/0704/21/4C4640EFB3CDEFEB726904D2265110FD_B500_900_500_63.PNG" alt="" width="500" height="63" />
 
+{% raw %}
 ```
 def readMemInfo():
          
@@ -208,6 +211,7 @@ if __name__ == '__main__':
     print calcMemUsage(counters)
 
 ```
+{% endraw %}
 
 　　
 
@@ -219,6 +223,7 @@ if __name__ == '__main__':
 
 <img src="http://m1.img.srcdd.com/farm4/d/2013/0704/21/8593F0E33D984EEEB3B6B01BF4A7CD5D_B500_900_362_291.PNG" alt="" width="362" height="291" />
 
+{% raw %}
 ```
 def readNetInfo(dev):
         
@@ -251,6 +256,7 @@ if __name__ == '__main__':
     print readNetInfo('eth0')
 
 ```
+{% endraw %}
 
 　　 
 
@@ -262,6 +268,7 @@ if __name__ == '__main__':
 
 这两个函数是程序的其它地方需要用到，就顺便写下来：
 
+{% raw %}
 ```
 import time
      
@@ -318,5 +325,6 @@ if __name__ == '__main__':
     print getIpAddress('eth0')
 
 ```
+{% endraw %}
 
 　　

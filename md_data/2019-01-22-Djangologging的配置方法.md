@@ -4,13 +4,14 @@ title:      Djangologging的配置方法
 subtitle:   
 date:       2019-01-22
 author:     P
-header-img: img/post-bg-coffee.jpeg
+header-img: img/post-bg-swift2.jpg
 catalog: true
 tags:
     - python
 ---
 做开发离不开日志，以下是我在工作中写Django项目常用的logging配置。
 
+{% raw %}
 ```
 BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
 LOGGING = {
@@ -90,6 +91,7 @@ LOGGING = {
     },
 }
 ```
+{% endraw %}
 
 附：Python logger流示图
 

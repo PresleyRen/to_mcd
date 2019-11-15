@@ -4,7 +4,7 @@ title:      Python网络爬虫之requests模块
 subtitle:   
 date:       2019-03-22
 author:     P
-header-img: img/post-bg-debug.png
+header-img: img/post-bg-kuaidi.jpg
 catalog: true
 tags:
     - python
@@ -26,6 +26,7 @@ tags:
 
 有些时候，我们在使用爬虫程序去爬取一些用户相关信息的数据（爬取张三人人网个人主页数据）时，如果使用之前requests模块常规操作时，往往达不到我们想要的目的，例如：
 
+{% raw %}
 ```
 <code class="language-python hljs">#!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -45,6 +46,7 @@ if __name__ == "__main__":
     with open('./renren.html','w',encoding='utf-8') as fp:
         fp.write(response.text)</code>
 ```
+{% endraw %}
 
 一.基于requests模块的cookie操作
 
@@ -60,6 +62,7 @@ if __name__ == "__main__":
 
 　　　　2.在使用个人信息页的url进行请求时，该请求需要携带 1 中的cookie，只有携带了cookie后，服务器才可识别这次请求的用户信息，方可响应回指定的用户信息页数据
 
+{% raw %}
 ```
 <code class="language-python hljs">#!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -97,6 +100,7 @@ if __name__ == "__main__":
     with open('./renren.html','w') as fp:
         fp.write(response.text)</code>
 ```
+{% endraw %}
 
 二.基于requests模块的代理操作
 
@@ -135,6 +139,7 @@ http://www.goubanjia.com/
 
 代码
 
+{% raw %}
 ```
 <code class="language-python hljs">#!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -170,6 +175,7 @@ if __name__ == "__main__":
     #切换成原来的IP
     requests.get(url, proxies={"http": ""})</code>
 ```
+{% endraw %}
 
 三.基于multiprocessing.dummy线程池的数据爬取
 

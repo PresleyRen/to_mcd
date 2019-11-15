@@ -4,7 +4,7 @@ title:      scrapy框架之递归解析和post请求
 subtitle:   
 date:       2019-03-22
 author:     P
-header-img: img/post-bg-digital-native.jpg
+header-img: img/post-bg-mma-2.jpg
 catalog: true
 tags:
     - python
@@ -27,6 +27,7 @@ tags:
 
 代码展示：
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 import scrapy
@@ -63,6 +64,7 @@ class QiushiSpider(scrapy.Spider):
             #递归爬取数据：callback参数的值为回调函数（将url请求后，得到的相应数据继续进行parse解析），递归调用parse函数
             yield scrapy.Request(url=url,callback=self.parse)</code>
 ```
+{% endraw %}
 
 2.五大核心组件工作流程：
 
@@ -83,16 +85,19 @@ class QiushiSpider(scrapy.Spider):
 
 - 解答：其实是因为爬虫文件中的爬虫类继承到了Spider父类中的start_requests（self）这个方法，该方法就可以对start_urls列表中的url发起请求：
 
+{% raw %}
 ```
 <code class="language-python hljs">  def start_requests(self):
         for u in self.start_urls:
            yield scrapy.Request(url=u,callback=self.parse)</code>
 ```
+{% endraw %}
 
 【注意】该方法默认的实现，是对起始的url发起get请求，如果想发起post请求，则需要子类重写该方法。
 
 　　-方法： 重写start_requests方法，让其发起post请求：
 
+{% raw %}
 ```
 <code class="language-python hljs">def start_requests(self):
         #请求的url
@@ -104,3 +109,4 @@ class QiushiSpider(scrapy.Spider):
         # 发送post请求
         yield scrapy.FormRequest(url=post_url, formdata=formdata, callback=self.parse)</code>
 ```
+{% endraw %}

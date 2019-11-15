@@ -4,7 +4,7 @@ title:      github与gitlab与git三个基佬的故事
 subtitle:   
 date:       2019-04-16
 author:     P
-header-img: img/post-bg-mma-5.jpg
+header-img: img/post-bg-android.jpg
 catalog: true
 tags:
     - python
@@ -29,6 +29,7 @@ github和gitlab的区别
 
 安装gitlab的命令
 
+{% raw %}
 ```
 我们是要在centos7上安装配置gitlab
 建议库容服务器配置，gitlab占用资源很多，最少4G内存虚拟机
@@ -58,18 +59,22 @@ gitlab-ctl status
 密码redhat123
 即可看到gitlab 
 ```
+{% endraw %}
 
 安装访问gitlab可能出现的问题
 
+{% raw %}
 ```
 如果初始化报错，有关编码问题，修改字符编码
 解决：在 ~/.bash_profile， 然后source ~/.bash_profile
 export LC_ALL="zh_CN.UTF-8"
 export LC_CTYPE="zh_CN.UTF-8"
 ```
+{% endraw %}
 
 检查gitlab安装
 
+{% raw %}
 ```
 gitlab-ce一键安装后可以利用rpm -ql gitlab-ce查询其文件安装路径及相关文件路径，其默认安装路径为/opt/gitlab/、程序数据及配置文件保存路径为/var/opt/gitlab下。
 相关默认位置
@@ -80,9 +85,11 @@ postgresql数据及配置目录：/var/opt/gitlab/postgresql/data/
 redis默认配置目录：/var/opt/gitlab/redis
 gitlab主要配置文件：/etc/gitlab/gitlab.rb
 ```
+{% endraw %}
 
 配置gitlab服务器，便于外接访问
 
+{% raw %}
 ```
 编辑/etc/gitlab/gitlab.rb
 修改gitlab运行外部URL默认的访问地址
@@ -93,14 +100,17 @@ external_url 'http://172.17.17.10:81'
 2.通过官网手册安装gitlab
 https://about.gitlab.com/install/#centos-7
 ```
+{% endraw %}
 
 在linux服务器上配置ssh秘钥
 
+{% raw %}
 ```
 ssh-keygen    一路回车
 查看公钥文件，放到gitlab
 cat /root/.ssh/id_rsa.pub
 ```
+{% endraw %}
 
 <img src="https://img2018.cnblogs.com/blog/1132884/201812/1132884-20181223182104610-203783050.png" alt="" width="698" height="391" />
 
@@ -122,6 +132,7 @@ cat /root/.ssh/id_rsa.pub
 
 #  gitlab代码下载/推送实战
 
+{% raw %}
 ```
 创建新的仓库，下载gitlab仓库
 git clone git@192.168.119.12:root/oldboypython.git        克隆下载远端仓库
@@ -136,3 +147,4 @@ git push -u origin master    推送到远端master主干仓库    origin是远�
 
 git remote show origin 查看远程服务器信息  orgin是在创建仓库时定义在.git/config配置文件中的
 ```
+{% endraw %}

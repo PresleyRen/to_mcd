@@ -4,7 +4,7 @@ title:      Djangorestframework（视图类详解）
 subtitle:   
 date:       2019-04-14
 author:     P
-header-img: img/post-bg-github-cup.jpg
+header-img: img/post-bg-mma-1.jpg
 catalog: true
 tags:
     - python
@@ -15,6 +15,7 @@ tags:
 
 #### 第一类：APIview
 
+{% raw %}
 ```
 <code class="python">class IndexView(APIView):
 
@@ -30,11 +31,13 @@ tags:
 #
 </code>
 ```
+{% endraw %}
 
 这种直接继承了APIView，是最原始的。请求方式就是那五种，get,post,put,patch,delete
 
 #### 第二类 GenericAPIView
 
+{% raw %}
 ```
 <code class="ruby">class IndexView(GenericAPIView):
     queryset = models.UserInfo.objects.all()
@@ -52,11 +55,13 @@ tags:
         return Response(ser.data)
 </code>
 ```
+{% endraw %}
 
 在GenericAPIView中要重写一些字段和方法，不常用。
 
 #### 第三类 GenericViewSet
 
+{% raw %}
 ```
 <code class="python">class IndexView(GenericViewSet):
     serializer_class = UserInfoSerializer
@@ -86,10 +91,12 @@ tags:
 
 </code>
 ```
+{% endraw %}
 
 这个类继承了ViewSetMixin, generics.GenericAPIView，其中在ViewSetMixin中会重写as_view()方法，因此可以将URL中的请求方式与视图函数绑定到一起，在urls.py中以键值对的方式存在：
 urls.py
 
+{% raw %}
 ```
 <code class="python">from django.conf.urls import url
 from django.contrib import admin
@@ -103,9 +110,11 @@ urlpatterns = [
 ]
 </code>
 ```
+{% endraw %}
 
 ViewSetMixin源码部分：
 
+{% raw %}
 ```
 <code class="python">class ViewSetMixin(object):
     """
@@ -216,11 +225,13 @@ ViewSetMixin源码部分：
         return reverse(url_name, *args, **kwargs)
 </code>
 ```
+{% endraw %}
 
 #### 第四类 ModelViewSet 继承了这个类，ModelViewSet继承了四个混入类和一个泛类，
 
 将会获得增删改查的所有方法。
 
+{% raw %}
 ```
 <code class="python">class IndexView(ModelViewSet):
     queryset = models.UserInfo.objects.all()
@@ -228,7 +239,9 @@ ViewSetMixin源码部分：
     
 </code>
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <code class="python">
 class ModelViewSet(mixins.CreateModelMixin,
@@ -244,6 +257,7 @@ class ModelViewSet(mixins.CreateModelMixin,
     pass
 </code>
 ```
+{% endraw %}
 
 使用类视图的好处：
 1、我们将各个HTTP请求方法之间，做了更好的分离。

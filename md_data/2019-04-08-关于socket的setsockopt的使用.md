@@ -4,7 +4,7 @@ title:      关于socket的setsockopt的使用
 subtitle:   
 date:       2019-04-08
 author:     P
-header-img: img/post-bg-ios10.jpg
+header-img: img/post-bg-github-cup.jpg
 catalog: true
 tags:
     - python
@@ -33,6 +33,7 @@ int setsockopt(int sock, int level, int optname, const void *optval, socklen_t o
 
 python中的使用：
 
+{% raw %}
 ```
 import socket
 from socket import SOL_SOCKET,SO_REUSEADDR,SO_SNDBUF,SO_RCVBUF
@@ -42,6 +43,7 @@ sk.setsockopt(SOL_SOCKET,SO_SNDBUF,32*1024)
 print('>>>>',sk.getsockopt(SOL_SOCKET,SO_SNDBUF))
 print('>>>>',sk.getsockopt(SOL_SOCKET,SO_RCVBUF))从结果来看，貌似我们是更改了缓冲区的大小，但是并没有更改，这个缓冲区大小是由系统来控制的，也就是说socket在系统的配置中，如果想让其生效，需要修改系统中的配置文件，windows下socket的配置文件大家可以去百度一下。
 ```
+{% endraw %}
 
 ### 三 参数及参数详细说明
 
@@ -61,6 +63,7 @@ SO_RCVBUF和SO_SNDBUF每个套接口都有一个发送缓冲区和一个接收�
 
 注意：当设置TCP套接口接收缓冲区的大小时，函数调用顺序是很重要的，因为TCP的窗口规模选项是在建立连接时用SYN与对方互换得到的。对于客 户，O_RCVBUF选项必须在connect之前设置；对于服务器，SO_RCVBUF选项必须在listen前设置。
 
+{% raw %}
 ```
 1 1.每个套接口都有一个发送缓冲区和一个接收缓冲区。 接收缓冲区被TCP和UDP用来将接收到的数据一直保存到由应用进程来读。 TCP：TCP通告另一端的窗口大小。 TCP套接口接收缓冲区不可能溢出，因为对方不允许发出超过所通告窗口大小的数据。 这就是TCP的流量控制，如果对方无视窗口大小而发出了超过窗口大小的数据，则接 收方TCP将丢弃它。 UDP：当接收到的数据报装不进套接口接收缓冲区时，此数据报就被丢弃。UDP是没有流量控制的；快的发送者可以很容易地就淹没慢的接收者，导致接收方的 UDP丢弃数据报。
 2         2.我们经常听说tcp协议的三次握手,但三次握手到底是什么，其细节是什么，为什么要这么做呢?
@@ -72,6 +75,7 @@ SO_RCVBUF和SO_SNDBUF每个套接口都有一个发送缓冲区和一个接收�
 8         2. 客户端到服务器和服务器到客户端的连接是独立的.
 9         我们再想想tcp协议的特点:连接的,可靠的,全双工的,实际上tcp的三次握手正是为了保证这些特性的实现.
 ```
+{% endraw %}
 
 ### 五 setsockopt的用法
 

@@ -13,9 +13,11 @@ Ubuntu16.04默认安装了Python2.7和3.5
 
 ## 安装Python2+：
 
+{% raw %}
 ```
 sudo apt-get install python
 ```
+{% endraw %}
 
 请注意，系统自带的python千万不能卸载！
 
@@ -75,29 +77,37 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 
 1、卸载python3.6
 
+{% raw %}
 ```
 sudo apt-get remove python3.6
 ```
+{% endraw %}
 
 2、卸载python3.6及其依赖
 
+{% raw %}
 ```
 sudo apt-get remove --auto-remove python3.6
 ```
+{% endraw %}
 
 3、清除python3.6
 
+{% raw %}
 ```
 sudo apt-get purge python3.6
 or
 sudo apt-get purge --auto-remove python3.6
 ```
+{% endraw %}
 
 下载 easy_install:
 
+{% raw %}
 ```
 sudo apt-get install python-setuptools python-dev build-essential
 ```
+{% endraw %}
 
 使用pip3 出现以下错误：
 
@@ -111,6 +121,8 @@ from pip import mainif __name__ == '__main__':    sys.exit(main())改为：
 
 from pip import __main__if __name__ == '__main__':    sys.exit(__main__._main())
 
+{% raw %}
 ```
 出现了错误locale.Error: unsupported locale settinubuntu:~# export LC_ALL=C
 ```
+{% endraw %}

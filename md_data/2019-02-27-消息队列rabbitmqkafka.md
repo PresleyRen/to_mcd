@@ -4,7 +4,7 @@ title:      消息队列rabbitmqkafka
 subtitle:   
 date:       2019-02-27
 author:     P
-header-img: img/post-bg-swift.jpg
+header-img: img/post-bg-map.jpg
 catalog: true
 tags:
     - python
@@ -13,9 +13,11 @@ tags:
 
 # 1. 你了解的消息队列
 
+{% raw %}
 ```
 rabbitmq是一个消息代理，它接收和转发消息，可以理解为是生活的邮局。你可以将邮件放在邮箱里，你可以确定有邮递员会发送邮件给收件人。概括：rabbitmq是接收，存储，转发数据的。官方教程：http://www.rabbitmq.com/tutorials/tutorial-one-python.html
 ```
+{% endraw %}
 
 消息（Message）是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串，也可以更复杂，可能包含嵌入对象。
 
@@ -79,33 +81,43 @@ rabbitmq是一个消息代理，它接收和转发消息，可以理解为是生
 
 rabbitmq-server服务端
 
+{% raw %}
 ```
 1.下载centos源wget -O /etc/yum.repos.d/CentOS-Base.repo   http://mirrors.cloud.tencent.com/repo/centos7_base.repo2.下载epel源wget -O /etc/yum.repos.d/epel.repo http://mirrors.cloud.tencent.com/repo/epel-7.repo3.清空yum缓存并且生成新的yum缓存yum clean allyum makecache4.安装erlang   $ yum -y install erlang5.安装RabbitMQ   $ yum -y install rabbitmq-server6.启动(无用户名密码):    systemctl start/stop/restart/status rabbitmq-server​
 ```
+{% endraw %}
 
 设置rabbitmq账号密码，以及角色权限设置
 
+{% raw %}
 ```
 # 设置新用户yugo 密码123sudo rabbitmqctl add_user yugo 123​# 设置用户为administrator角色sudo rabbitmqctl set_user_tags yugo administrator​# 设置权限，允许对所有的队列都有权限sudo rabbitmqctl set_permissions -p "/" yugo ".*" ".*" ".*"​#重启服务生效设置service rabbitmq-server start/stop/restart
 ```
+{% endraw %}
 
 rabbitmq相关命令
 
+{% raw %}
 ```
 // 新建用户rabbitmqctl add_user {用户名} {密码}​// 设置权限rabbitmqctl set_user_tags {用户名} {权限}​// 查看用户列表rabbitmqctl list_users​// 为用户授权添加 Virtual Hosts ：    rabbitmqctl add_vhost <vhost>    ​// 删除用户rabbitmqctl delete_user Username​// 修改用户的密码rabbitmqctl change_password Username Newpassword    // 删除 Virtual Hosts ：    rabbitmqctl delete_vhost <vhost>        // 添加 Users ：    rabbitmqctl add_user <username> <password>    rabbitmqctl set_user_tags <username> <tag> ...    rabbitmqctl set_permissions [-p <vhost>] <user> <conf> <write> <read>        // 删除 Users ：    delete_user <username>   ​// 使用户user1具有vhost1这个virtual host中所有资源的配置、写、读权限以便管理其中的资源rabbitmqctl  set_permissions -p vhost1 user1 '.*' '.*' '.*' ​// 查看权限rabbitmqctl list_user_permissions user1​rabbitmqctl list_permissions -p vhost1​// 清除权限rabbitmqctl clear_permissions [-p VHostPath] User​//清空队列步骤rabbitmqctl reset 需要提前关闭应用rabbitmqctl stop_app ，然后再清空队列，启动应用rabbitmqctl start_app此时查看队列rabbitmqctl list_queues​查看所有的exchange：                              rabbitmqctl list_exchanges查看所有的queue：                                 rabbitmqctl list_queues查看所有的用户：                                   rabbitmqctl list_users查看所有的绑定（exchange和queue的绑定信息）：         rabbitmqctl list_bindings查看消息确认信息：rabbitmqctl list_queues name messages_ready messages_unacknowledged查看RabbitMQ状态，包括版本号等信息：rabbitmqctl status
 ```
+{% endraw %}
 
 # 连接客户端
 
+{% raw %}
 ```
 // rabbitmq官方推荐的python客户端pika模块pip3 install pika
 ```
+{% endraw %}
 
 ## 生产-消费者模型
 
+{% raw %}
 ```
 P   是生产者C   是消费者中间hello是消息队列可以有多个P、多个C​P发送消息给hello队列，C消费者从队列中获取消息，默认轮询方式
 ```
+{% endraw %}
 
  <img src="https://img2018.cnblogs.com/blog/1132884/201901/1132884-20190125093518791-776768428.png" alt="" />
 
@@ -113,13 +125,17 @@ P   是生产者C   是消费者中间hello是消息队列可以有多个P、多
 
 生产者send.py
 
+{% raw %}
 ```
 我们的第一个程序send.py将向队列发送一条消息。我们需要做的第一件事是建立与RabbitMQ服务器的连接。​#!/usr/bin/env pythonimport pika# 创建凭证，使用rabbitmq用户密码登录credentials = pika.PlainCredentials("root","123")# 新建连接，这里localhost可以更换为服务器ipconnection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))# 创建频道channel = connection.channel()# 新建一个hello队列，用于接收消息channel.queue_declare(queue='oldboypython')# 注意在rabbitmq中，消息想要发送给队列，必须经过交换(exchange)，初学可以使用空字符串交换(exchange='')，它允许我们精确的指定发送给哪个队列(routing_key=''),参数body值发送的数据channel.basic_publish(exchange='',                      routing_key='oldboypython',                      body='msg6')print("已经发送了消息")# 程序退出前，确保刷新网络缓冲以及消息发送给rabbitmq，需要关闭本次连接connection.close()<img src="https://img2018.cnblogs.com/blog/1132884/201901/1132884-20190125093508158-1126442290.png" alt="" />
 ```
+{% endraw %}
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 <img alt="" data-local-refresh="true" />
 
@@ -127,9 +143,11 @@ P   是生产者C   是消费者中间hello是消息队列可以有多个P、多
 
 接受者receive.py，可以运行多次，运行多个消费者
 
+{% raw %}
 ```
 import pika# 建立与rabbitmq的连接credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​​channel.queue_declare(queue="oldboypython")​def callbak(ch,method,properties,body):    print("消费者接收到了任务：%r"%body)# 有消息来临，立即执行callbak，没有消息则夯住，等待消息channel.basic_consume(callbak,queue="oldboypython",no_ack=True)# 开始消费，接收消息channel.start_consuming()    
 ```
+{% endraw %}
 
 练习：
 
@@ -153,17 +171,21 @@ ACK机制用于保证消费者如果拿了队列的消息，`客户端`处理时
 
 生产者.py `只负责发送数据即可`
 
+{% raw %}
 ```
 import pika# 无密码# connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61'))​# 有密码credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()# 声明一个队列(创建一个队列)channel.queue_declare(queue='s13q2')​channel.basic_publish(exchange='',                      routing_key='s13q2', # 关键字查找到队列名                      body='msg8')connection.close()
 ```
+{% endraw %}
 
 消费者.py`给与ack回复`
 
 拿到消息必须给rabbitmq服务端回复ack信息，否则消息不会被删除，防止客户端出错，数据丢失
 
+{% raw %}
 ```
 import pika​credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# 声明一个队列(创建一个队列)channel.queue_declare(queue='s13q2')​def callback(ch, method, properties, body):    print("消费者接受到了任务: %r" % body)    # int('asdfasdf')    # 我告诉rabbitmq服务端，我已经取走了消息    ch.basic_ack(delivery_tag=method.delivery_tag)# 关闭no_ack，给与服务端ack回复channel.basic_consume(callback,queue='s13q2',no_ack=False)​channel.start_consuming()
 ```
+{% endraw %}
 
 ## 消息持久化
 
@@ -171,15 +193,19 @@ import pika​credentials = pika.PlainCredentials("root","123")connection = pika
 
 生产者.py
 
+{% raw %}
 ```
 import pika# 无密码# connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61'))​# 有密码credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()# 声明一个队列(创建一个队列)# 默认此队列不支持持久化，如果服务挂掉，数据丢失# durable=True 开启持久化，必须新开启一个队列，原本的队列已经不支持持久化了channel.queue_declare(queue='music',durable=True)​channel.basic_publish(exchange='',                      routing_key='music', # 消息队列名称                      body='haohaio4',                      # 支持数据持久化                      properties=pika.BasicProperties(                          delivery_mode=2,                      )                      )connection.close()​
 ```
+{% endraw %}
 
 消费者.py
 
+{% raw %}
 ```
 import pika​credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# 声明一个队列(创建一个队列)channel.queue_declare(queue='music',durable=True)​def callback(ch, method, properties, body):    print("消费者接受到了任务: %r" % body)    # 模拟代码报错    # int('asdfasdf')​    # 此处报错，没有给予回复，保证客户端挂掉，数据不丢失    # 告诉服务端，我已经取走了数据    # ch.basic_ack(delivery_tag=method.delivery_tag)​# 关闭no_ack，代表给与回复确认channel.basic_consume(callback,queue='music',no_ack=False)​channel.start_consuming()​
 ```
+{% endraw %}
 
 # Exchange模型
 
@@ -217,31 +243,39 @@ headers类型的Exchange不依赖于routing key与binding key的匹配规则来�
 
 发布订阅和简单的消息队列区别在于，发布订阅会将消息发送给所有的订阅者，而消息队列中的数据被消费一次便消失。所以，RabbitMQ实现发布和订阅时，会为每一个订阅者创建一个队列，而发布者发布消息时，会将消息放置在所有相关队列中。
 
+{% raw %}
 ```
 # fanout所有的队列放一份/给某些队列发# 传送消息的模式# 与exchange有关的模式都发exchange_type = fanout
 ```
+{% endraw %}
 
 `消费者_订阅.py`
 
 可以运行多次，运行多个消费者，等待消息
 
+{% raw %}
 ```
 import pika​credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# exchange='m1',exchange(秘书)的名称# exchange_type='fanout' , 秘书工作方式将消息发送给所有的队列channel.exchange_declare(exchange='m1',exchange_type='fanout')​# 随机生成一个队列result = channel.queue_declare(exclusive=True)queue_name = result.method.queue​# 让exchange和queque进行绑定.channel.queue_bind(exchange='m1',queue=queue_name)​​def callback(ch, method, properties, body):    print("消费者接受到了任务: %r" % body)​channel.basic_consume(callback,queue=queue_name,no_ack=True)​channel.start_consuming()
 ```
+{% endraw %}
 
 `生产者_发布者.py`
 
+{% raw %}
 ```
 # -*- coding: utf-8 -*-# __author__ = "yugo"​​import pikacredentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# 指定exchangechannel.exchange_declare(exchange='m1',exchange_type='fanout')​channel.basic_publish(exchange='m1',                      routing_key='',# 这里不再指定队列，由exchange分配,如果是fanout模式，每一个队列放一份                      body='haohaio')​connection.close()​
 ```
+{% endraw %}
 
 实例
 
+{% raw %}
 ```
 1.可以运行多个消费者，相当于有多个滴滴司机，等待着Exchange同一个电台发消息
 2.运行发布者，发送消息给Exchange，查看是否给所有的队列(滴滴司机)发送了消息
 
 ```
+{% endraw %}
 
 # 关键字发布Exchange
 
@@ -255,25 +289,31 @@ import pika​credentials = pika.PlainCredentials("root","123")connection = pika
 
 路由关键字是sb,alex
 
+{% raw %}
 ```
 # -*- coding: utf-8 -*-# __author__ = "maple"import pika​credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# exchange='m1',exchange(秘书)的名称# exchange_type='fanout' , 秘书工作方式将消息发送给所有的队列channel.exchange_declare(exchange='m2',exchange_type='direct')​# 随机生成一个队列,队列退出时，删除这个队列result = channel.queue_declare(exclusive=True)queue_name = result.method.queue​# 让exchange和queque进行绑定，只要channel.queue_bind(exchange='m2',queue=queue_name,routing_key='alex')channel.queue_bind(exchange='m2',queue=queue_name,routing_key='sb')​​def callback(ch, method, properties, body):    print("消费者接受到了任务: %r" % body)​channel.basic_consume(callback,queue=queue_name,no_ack=True)​channel.start_consuming()​​​
 ```
+{% endraw %}
 
 消费者2.py
 
 路由关键字sb
 
+{% raw %}
 ```
 # -*- coding: utf-8 -*-# __author__ = "maple"import pika​credentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# exchange='m1',exchange(秘书)的名称# exchange_type='fanout' , 秘书工作方式将消息发送给所有的队列channel.exchange_declare(exchange='m2',exchange_type='direct')​# 随机生成一个队列result = channel.queue_declare(exclusive=True)queue_name = result.method.queue​# 让exchange和queque进行绑定.channel.queue_bind(exchange='m2',queue=queue_name,routing_key='sb')​​def callback(ch, method, properties, body):    print("消费者接受到了任务: %r" % body)​channel.basic_consume(callback,queue=queue_name,no_ack=True)​channel.start_consuming()
 ```
+{% endraw %}
 
 生产者.py
 
 发送消息给匹配的路由，sb或者alex 
 
+{% raw %}
 ```
 # -*- coding: utf-8 -*-# __author__ = "yugo"​​import pikacredentials = pika.PlainCredentials("root","123")connection = pika.BlockingConnection(pika.ConnectionParameters('123.206.16.61',credentials=credentials))channel = connection.channel()​# 路由模式的交换机会发送给绑定的key和routing_key匹配的队列channel.exchange_declare(exchange='m2',exchange_type='direct')# 发送消息，给有关sb的路由关键字channel.basic_publish(exchange='m2',                      routing_key='sb',                      body='aaaalexlaolelaodi')​connection.close()
 ```
+{% endraw %}
 
 # RPC之远程过程调用
 
@@ -281,35 +321,45 @@ import pika​credentials = pika.PlainCredentials("root","123")connection = pika
 
 **比喻**
 
+{% raw %}
 ```
 将计算机服务运行理解为厨师做饭，厨师想做一个小葱拌豆腐，厨师需要洗小葱、切豆腐、调汁、凉拌。他一个人完成所有的事，如同古老的集中式应用，一台计算机做所有的事。​制作小葱拌豆腐{    厨师>洗小葱>切豆腐>凉拌}
 ```
+{% endraw %}
 
 `rpc`应用场景
 
+{% raw %}
 ```
 而如今，饭店做大了，有钱了，专职分工来干活，不再是厨师单打独斗，备菜师傅准备小葱、豆腐，切菜师傅切小葱、豆腐，厨师只负责调味，完成食品。​制作小葱拌豆腐{    备菜师>洗菜    切菜师>切菜    厨师>调味}
 ```
+{% endraw %}
 
 此时一件事好多人在做，厨师就得和其他人沟通，通知备菜、洗菜师傅的这个动作就是远程过程调用（RPC）。
 
 这个过程在计算机系统中，一个电商的下单过程，涉及物流、支付、库存、红包等多个系统，多个系统又在多个服务器上，由不同的技术团队负责，整个下单过程，需要所有团队进行远程调用。
 
+{% raw %}
 ```
 下单{    库存>减少库存    支付>扣款    红包>减免红包    物流>生成订单}
 ```
+{% endraw %}
 
 ### 到底什么是rpc
 
+{% raw %}
 ```
 rpc指的是在计算机A上的进程，调用另外一台计算机B的进程，A上的进程被挂起，B上的被调用进程开始执行后，产生返回值给A，A继续执行。调用方可以通过参数将信息传递给被调用方，而后通过返回结果得到信息，这个过程对于开发人员来说是透明的。​如同厨师一样，服务员把菜单给后厨，厨师告诉洗菜人，备菜人，开始工作，完成工作后，整个过程对于服务员是透明的，他完全不用管后厨是怎么把菜做好的。
 ```
+{% endraw %}
 
 由于服务在不同的机器上，远程调用必经网络通信，调用服务必须写一坨网络通信代码，很容易出错且很复杂，因此就出现了RPC框架。
 
+{% raw %}
 ```
 阿里巴巴的 Dubbo     java新浪的     Motan    java谷歌的     gRPC     多语言Apache      thrift  多语言
 ```
+{% endraw %}
 
 ## python实现RPC
 
@@ -323,20 +373,26 @@ rpc指的是在计算机A上的进程，调用另外一台计算机B的进程，
 
 一个客户端可能会发送多个请求给服务器，当服务器处理完后，客户端无法辨别在回调队列中的响应具体和那个请求时对应的。为了处理这种情况，客户端在发送每个请求时，同时会附带一个独有`correlation_id`属性，这样客户端在回调队列中根据`correlation_id`字段的值就可以分辨此响应属于哪个请求。
 
+{% raw %}
 ```
 客户端发送请求：某个应用将请求信息交给客户端，然后客户端发送RPC请求，在发送RPC请求到RPC请求队列时，客户端至少发送带有reply_to以及correlation_id两个属性的信息​服务器端工作流： 等待接受客户端发来RPC请求，当请求出现的时候，服务器从RPC请求队列中取出请求，然后处理后，将响应发送到reply_to指定的回调队列中​客户端接受处理结果： 客户端等待回调队列中出现响应，当响应出现时，它会根据响应中correlation_id字段的值，将其返回给对应的应用
 ```
+{% endraw %}
 
 `rpc_server.py`
 
+{% raw %}
 ```
 import pikaimport uuid​class FibonacciRpcClient(object):    def __init__(self):​        # 客户端启动时，创建回调队列，会开启会话用于发送RPC请求以及接受响应​        # 建立连接，指定服务器的ip地址        self.connection = pika.BlockingConnection(pika.ConnectionParameters(            host='123.206.16.61'))​        # 建立一个会话，每个channel代表一个会话任务        self.channel = self.connection.channel()​        # 声明回调队列，再次声明的原因是，服务器和客户端可能先后开启，该声明是幂等的，多次声明，但只生效一次        result = self.channel.queue_declare(exclusive=True)        # 将次队列指定为当前客户端的回调队列        self.callback_queue = result.method.queue​        # 客户端订阅回调队列，当回调队列中有响应时，调用`on_response`方法对响应进行处理;        self.channel.basic_consume(self.on_response, no_ack=True,                                   queue=self.callback_queue)​    # 对回调队列中的响应进行处理的函数    def on_response(self, ch, method, props, body):        if self.corr_id == props.correlation_id:            self.response = body​    # 发出RPC请求    def call(self, n):​        # 初始化 response        self.response = None​        # 生成correlation_id 关联标识        self.corr_id = str(uuid.uuid4())​        # 发送RPC请求内容到RPC请求队列`rpc_queue`，同时发送的还有`reply_to`和`correlation_id`        self.channel.basic_publish(exchange='',                                   routing_key='rpc_queue',                                   properties=pika.BasicProperties(                                       reply_to=self.callback_queue,                                       correlation_id=self.corr_id,                                   ),                                   body=str(n))​        while self.response is None:            self.connection.process_data_events()        return int(self.response)​​# 建立客户端fibonacci_rpc = FibonacciRpcClient()​# 发送RPC请求print(" [x] Requesting sum(30)")response = fibonacci_rpc.call(40)print(" [.] Got %r" % response)​​​
 ```
+{% endraw %}
 
 rpc_client.py
 
+{% raw %}
 ```
 import pika​# 建立连接，服务器地址为localhost，可指定ip地址connection = pika.BlockingConnection(pika.ConnectionParameters(    host='123.206.16.61'))​# 建立会话channel = connection.channel()​# 声明RPC请求队列channel.queue_declare(queue='rpc_queue')​​# 数据处理方法def sum(n):    n+=100    return n​​​# 对RPC请求队列中的请求进行处理def on_request(ch, method, props, body):    n = int(body)​    print(" [.] sum(%s)" % n)​    # 调用数据处理方法    response = sum(n)​    # 将处理结果(响应)发送到回调队列    ch.basic_publish(exchange='',                     # reply_to代表回复目标                     routing_key=props.reply_to,                     # correlation_id（关联标识）：用来将RPC的响应和请求关联起来。                     properties=pika.BasicProperties(correlation_id= \                                                         props.correlation_id),                     body=str(response))    ch.basic_ack(delivery_tag=method.delivery_tag)​​# 负载均衡，同一时刻发送给该服务器的请求不超过一个channel.basic_qos(prefetch_count=1)​channel.basic_consume(on_request, queue='rpc_queue')​print(" [x] Awaiting RPC requests")channel.start_consuming()​
 ```
+{% endraw %}
 
  

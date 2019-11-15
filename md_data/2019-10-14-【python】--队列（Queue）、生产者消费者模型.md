@@ -4,7 +4,7 @@ title:      【python】--队列（Queue）、生产者消费者模型
 subtitle:   
 date:       2019-10-14
 author:     P
-header-img: img/post-bg-re-vs-ng2.jpg
+header-img: img/post-bg-mma-6.jpg
 catalog: true
 tags:
     - python

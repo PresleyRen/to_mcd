@@ -4,7 +4,7 @@ title:      Python操作RabbitMQ、Redis、Memcache、SQLAlchemy
 subtitle:   
 date:       2019-01-22
 author:     P
-header-img: img/post-bg-debug.png
+header-img: img/post-bg-alibaba.jpg
 catalog: true
 tags:
     - python
@@ -93,6 +93,7 @@ A用户修改商品剩余个数 product_count＝899B用户修改商品剩余个�
 
 redis是一个key-value[存储系统](http://baike.baidu.com/view/51839.htm)。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list([链表](http://baike.baidu.com/view/549479.htm))、set(集合)、zset(sorted set --有序集合)和hash（哈希类型）。这些[数据类型](http://baike.baidu.com/view/675645.htm)都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。
 
+{% raw %}
 ```
 1. 使用Redis有哪些好处？
 
@@ -235,6 +236,7 @@ Agora Games就是一个很好的例子，用Ruby实现的，它的排行榜就�
 
 Redis提供的所有特性中，我感觉这个是喜欢的人最少的一个，虽然它为用户提供如果此多功能。
 ```
+{% endraw %}
 
 一、Redis安装和基本使用
 <td class="gutter">1234</td><td class="code">`wget http:``/``/``download.redis.io``/``releases``/``redis``-``3.0``.``6.tar``.gz``tar xzf redis``-``3.0``.``6.tar``.gz``cd redis``-``3.0``.``6``make`</td>
@@ -2980,6 +2982,7 @@ scan(cursor=0, match=None, count=None)scan_iter(match=None, count=None)
 redis-py默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作，如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。
 <td class="gutter">12345678910111213141516</td><td class="code">`#!/usr/bin/env python``# -*- coding:utf-8 -*-` `import` `redis` `pool ``=` `redis.ConnectionPool(host``=``'10.211.55.4'``, port``=``6379``)` `r ``=` `redis.Redis(connection_pool``=``pool)` `# pipe = r.pipeline(transaction=False)``pipe ``=` `r.pipeline(transaction``=``True``)``pipe.multi()``pipe.``set``(``'name'``, ``'alex'``)``pipe.``set``(``'role'``, ``'sb'``)` `pipe.execute()`</td>
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3004,6 +3007,7 @@ with conn.pipeline() as pipe:
     # 执行，把所有命令一次性推送过去
     pipe.execute()
 ```
+{% endraw %}
 
 5、发布订阅
 
@@ -3015,6 +3019,7 @@ with conn.pipeline() as pipe:
 
 Demo如下：
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3039,6 +3044,7 @@ class RedisHelper:
         pub.parse_response()
         return pub
 ```
+{% endraw %}
 
 订阅者：
 <td class="gutter">1234567891011</td><td class="code">`#!/usr/bin/env python``# -*- coding:utf-8 -*-` `from` `monitor.RedisHelper ``import` `RedisHelper` `obj ``=` `RedisHelper()``redis_sub ``=` `obj.subscribe()` `while` `True``:``    ``msg``=` `redis_sub.parse_response()``    ``print` `msg`</td>
@@ -3075,6 +3081,7 @@ RabbitMQ安装
 
 基于Queue实现生产者消费者模型
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3103,6 +3110,7 @@ for i in range(10):
     t = threading.Thread(target=consumer, args=(i,))
     t.start()
 ```
+{% endraw %}
 
 对于RabbitMQ来说，生产和消费不再针对内存里的一个Queue对象，而是某台服务器上的RabbitMQ Server实现的消息队列。
 <td class="gutter">12345678910111213141516</td><td class="code">`#!/usr/bin/env python``import` `pika` `# ######################### 生产者 #########################` `connection ``=` `pika.BlockingConnection(pika.ConnectionParameters(``        ``host``=``'localhost'``))``channel ``=` `connection.channel()` `channel.queue_declare(queue``=``'hello'``)` `channel.basic_publish(exchange``=``'',``                      ``routing_key``=``'hello'``,``                      ``body``=``'Hello World!'``)``print``(``" [x] Sent 'Hello World!'"``)``connection.close()`</td>
@@ -3110,6 +3118,7 @@ for i in range(10):
 
 1、acknowledgment 消息不丢失
 
+{% raw %}
 ```
 import pika
 
@@ -3133,9 +3142,11 @@ channel.basic_consume(callback,
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
+{% endraw %}
 
 2、durable   消息不丢失
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3155,7 +3166,9 @@ channel.basic_publish(exchange='',
 print(" [x] Sent 'Hello World!'")
 connection.close()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3182,6 +3195,7 @@ channel.basic_consume(callback,
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
+{% endraw %}
 
 3、消息获取顺序
 
@@ -3189,6 +3203,7 @@ channel.start_consuming()
 
 channel.basic_qos(prefetch_count=1) 表示谁来谁取，不再按照奇偶数排列
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3217,6 +3232,7 @@ channel.basic_consume(callback,
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
+{% endraw %}
 
 4、发布订阅
 
@@ -3224,6 +3240,7 @@ channel.start_consuming()
 
 发布订阅和简单的消息队列区别在于，发布订阅会将消息发送给所有的订阅者，而消息队列中的数据被消费一次便消失。所以，RabbitMQ实现发布和订阅时，会为每一个订阅者创建一个队列，而发布者发布消息时，会将消息放置在所有相关队列中。
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3243,7 +3260,9 @@ channel.basic_publish(exchange='logs',
 print(" [x] Sent %r" % message)
 connection.close()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3272,6 +3291,7 @@ channel.basic_consume(callback,
 
 channel.start_consuming()
 ```
+{% endraw %}
 
 5、关键字发送
 
@@ -3279,6 +3299,7 @@ channel.start_consuming()
 
 之前事例，发送消息时明确指定某个队列并向其中发送消息，RabbitMQ还支持根据关键字发送，即：队列绑定关键字，发送者将数据根据关键字发送到消息exchange，exchange根据 关键字 判定应该将数据发送至指定队列。
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3315,7 +3336,9 @@ channel.basic_consume(callback,
 
 channel.start_consuming()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3336,6 +3359,7 @@ channel.basic_publish(exchange='direct_logs',
 print(" [x] Sent %r:%r" % (severity, message))
 connection.close()
 ```
+{% endraw %}
 
 6、模糊匹配
 
@@ -3347,6 +3371,7 @@ connection.close()
 - *  表示只能匹配 一个 单词
 <td class="gutter">123</td><td class="code">`发送者路由值              队列中``old.boy.python          old.``*`  `-``-` `不匹配``old.boy.python          old.``#  -- 匹配`</td>
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3383,7 +3408,9 @@ channel.basic_consume(callback,
 
 channel.start_consuming()
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 import pika
@@ -3404,9 +3431,11 @@ channel.basic_publish(exchange='topic_logs',
 print(" [x] Sent %r:%r" % (routing_key, message))
 connection.close()
 ```
+{% endraw %}
 
 注意：
 
+{% raw %}
 ```
 sudo rabbitmqctl add_user wupeiqi 123
 # 设置用户为administrator角色
@@ -3425,7 +3454,9 @@ credentials = pika.PlainCredentials("wupeiqi","123")
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.14.47',credentials=credentials))
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3455,6 +3486,7 @@ channel.basic_consume(callback,
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
+{% endraw %}
 
 ### SQLAlchemy
 
@@ -3468,6 +3500,7 @@ Dialect用于和数据API进行交流，根据配置文件的不同调用不同�
 使用 Engine/ConnectionPooling/Dialect 进行数据库操作，Engine使用ConnectionPooling连接数据库，然后再通过Dialect执行SQL语句。
 <td class="gutter">1234567891011121314151617181920212223</td><td class="code">`#!/usr/bin/env python``# -*- coding:utf-8 -*-` `from` `sqlalchemy ``import` `create_engine`  `engine ``=` `create_engine(``"mysql+mysqldb://root:123@127.0.0.1:3306/s11"``, max_overflow``=``5``)` `engine.execute(``    ``"INSERT INTO ts_test (a, b) VALUES ('2', 'v1')"``)` `engine.execute(``     ``"INSERT INTO ts_test (a, b) VALUES (%s, %s)"``,``    ``((``555``, ``"v1"``),(``666``, ``"v1"``),)``)``engine.execute(``    ``"INSERT INTO ts_test (a, b) VALUES (%(id)s, %(name)s)"``,``    ``id``=``999``, name``=``"v1"``)` `result ``=` `engine.execute(``'select * from ts_test'``)``result.fetchall()`</td>
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3489,6 +3522,7 @@ conn = engine.connect()
 with conn.begin():
        conn.execute("some statement", {'x':5, 'y':10})
 ```
+{% endraw %}
 
 **注：查看数据库连接：show status like 'Threads%';**
 
@@ -3497,6 +3531,7 @@ with conn.begin():
 使用 Schema Type/SQL Expression Language/Engine/ConnectionPooling/Dialect 进行数据库操作。Engine使用Schema Type创建一个特定的结构对象，之后通过SQL Expression Language将该对象转换成SQL语句，然后通过 ConnectionPooling 连接数据库，再然后通过 Dialect 执行SQL，并获取结果。
 <td class="gutter">123456789101112131415161718192021</td><td class="code">`#!/usr/bin/env python``# -*- coding:utf-8 -*-` `from` `sqlalchemy ``import` `create_engine, Table, Column, Integer, String, MetaData, ForeignKey` `metadata ``=` `MetaData()` `user ``=` `Table(``'user'``, metadata,``    ``Column(``'id'``, Integer, primary_key``=``True``),``    ``Column(``'name'``, String(``20``)),``)` `color ``=` `Table(``'color'``, metadata,``    ``Column(``'id'``, Integer, primary_key``=``True``),``    ``Column(``'name'``, String(``20``)),``)``engine ``=` `create_engine(``"mysql+mysqldb://root:123@127.0.0.1:3306/s11"``, max_overflow``=``5``)` `metadata.create_all(engine)``# metadata.clear()``# metadata.remove()`</td>
 
+{% raw %}
 ```
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
@@ -3541,6 +3576,7 @@ conn.close()
 # print result.fetchall()
 # conn.close()
 ```
+{% endraw %}
 
 更多内容详见：
 

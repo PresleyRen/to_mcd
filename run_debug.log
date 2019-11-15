@@ -23,3 +23,8 @@ success: 152, faild: 0
 2019-11-15 17:52:07,822 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 2.1644842624664307 
 post total: 152, to md result: 
 success: 152, faild: 0
+2019-11-15 18:33:24,570 root transfer_md.py[line:89] _loads_file DEBUG xml file to abs pname done, count file: 1
+2019-11-15 18:33:24,707 root transfer_md.py[line:104] gen_md_file DEBUG find post total: 152
+2019-11-15 18:33:26,752 root transfer_md.py[line:99] start_work DEBUG xml to md done, spend time: 2.181907892227173 
+post total: 152, to md result: 
+success: 152, faild: 0

@@ -4,7 +4,7 @@ title:      pyppeteer模块的基本使用
 subtitle:   
 date:       2019-07-31
 author:     P
-header-img: img/post-bg-hacker.jpg
+header-img: img/post-bg-kuaidi.jpg
 catalog: true
 tags:
     - python
@@ -17,9 +17,11 @@ tags:
 
 在 Pyppetter 中，实际上它背后也是有一个类似 Chrome 浏览器的 Chromium 浏览器在执行一些动作进行网页渲染，首先说下 Chrome 浏览器和 Chromium 浏览器的渊源。
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `Chromium 是谷歌为了研发 Chrome 而启动的项目，是完全开源的。二者基于相同的源代码构建，Chrome 所有的新功能都会先在 Chromium 上实现，待验证稳定后才会移植，因此 Chromium 的版本更新频率更高，也会包含很多新的功能，但作为一款独立的浏览器，Chromium 的用户群体要小众得多。两款浏览器同根同源，它们有着同样的 Logo，但配色不同，Chrome 由蓝红绿黄四种颜色组成，而 Chromium 由不同深度的蓝色构成。`
 
@@ -34,9 +36,11 @@ tags:
 
 - 爬取[http://quotes.toscrape.com/js/](http://quotes.toscrape.com/js/) 全部页面数据
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -70,17 +74,21 @@ tags:
 
 
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `browser = await launch(headless=False, args=['--disable-infobars'])`
 
 处理页面显示问题:访问淘宝首页
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -95,9 +103,11 @@ tags:
 
 <img src="https://book.apeland.cn/media/images/2019/05/26/Snip20190524_16.png" alt="" />发现页面显示出现了问题，需要手动调用setViewport方法设置显示页面的长宽像素。设置如下：
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -115,9 +125,11 @@ tags:
 
 执行js程序：拖动滚轮。调用evaluate方法。
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -138,9 +150,11 @@ tags:
 
 规避webdriver检测：
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -154,17 +168,21 @@ tags:
 1.  
 1. `asyncio.get_event_loop().run_until_complete(main())`
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `await self.page.setUserAgent('xxx')`
 
 节点交互
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`
@@ -196,9 +214,11 @@ tags:
 
 爬取头条和网易的新闻标题
 
+{% raw %}
 ```
  
 ```
+{% endraw %}
 
 1. `import asyncio`
 1. `from pyppeteer import launch`

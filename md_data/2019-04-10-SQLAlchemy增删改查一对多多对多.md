@@ -4,7 +4,7 @@ title:      SQLAlchemy增删改查一对多多对多
 subtitle:   
 date:       2019-04-10
 author:     P
-header-img: img/post-bg-re-vs-ng2.jpg
+header-img: img/post-bg-keybord.jpg
 catalog: true
 tags:
     - python
@@ -23,6 +23,7 @@ tags:
 
 ### 1.创建数据表
 
+{% raw %}
 ```
  1 # ORM中的数据表是什么呢?
  2 # Object Relation Mapping
@@ -58,11 +59,13 @@ tags:
 32 # Base 自动检索所有继承Base的ORM 对象 并且创建所有的数据表
 33 Base.metadata.create_all(engine)
 ```
+{% endraw %}
 
 ### 2.增删改查操作
 
 2.1.增加数据
 
+{% raw %}
 ```
  1 #insert 为数据表增加数据
  2 # insert One 增加一行数据
@@ -111,9 +114,11 @@ tags:
 45 
 46 db_session.close()
 ```
+{% endraw %}
 
 2.2.查询数据
 
+{% raw %}
 ```
  1 # ORM操作查询数据
  2 # 有了刚才Insert增加数据的经验,那么查询之前的准备工作,就不用再重复了吧
@@ -166,9 +171,11 @@ tags:
 49 db_session.close()
 50 #关闭会话
 ```
+{% endraw %}
 
 2.3.修改数据
 
+{% raw %}
 ```
  1 # ORM更新数据
  2 # 无论是更新还是删除,首先要做的事情,就应该是查询吧
@@ -198,9 +205,11 @@ tags:
 26 db_session.close()
 27 #关闭会话
 ```
+{% endraw %}
 
 2.4.删除数据
 
+{% raw %}
 ```
  1 # ORM 删除一条多条数据
  2 # 老规矩
@@ -219,9 +228,11 @@ tags:
 15 db_session.close()
 16 #关闭会话
 ```
+{% endraw %}
 
 2.5.搞基!高级版查询操作
 
+{% raw %}
 ```
   1 # 高级版查询操作,厉害了哦
   2 #老规矩
@@ -339,9 +350,11 @@ tags:
 114 # 关闭连接
 115 db_session.close()
 ```
+{% endraw %}
 
 2.6.高级修改数据操作
 
+{% raw %}
 ```
  1 #高级版更新操作
  2 from my_create_table import User,engine
@@ -360,11 +373,13 @@ tags:
 15 db_session.query(User).filter(User.id > 0).update({"age": User.age + 1}, synchronize_session="evaluate")
 16 db_session.commit()
 ```
+{% endraw %}
 
 ### 3.一对多的操作 : ForeignKey
 
 3.1.创建数据表及关系relationship:
 
+{% raw %}
 ```
  1 from sqlalchemy.ext.declarative import declarative_base
  2 
@@ -396,9 +411,11 @@ tags:
 28 
 29 Base.metadata.create_all(engine)
 ```
+{% endraw %}
 
 3.2.基于relationship增加数据
 
+{% raw %}
 ```
  1 from my_ForeignKey import Student, ClassTable,engine
  2 # 创建连接
@@ -444,9 +461,11 @@ tags:
 42 # 关闭连接
 43 db_session.close()
 ```
+{% endraw %}
 
 3.3.基于relationship查询数据
 
+{% raw %}
 ```
  1 from my_ForeignKey import Student, ClassTable,engine
  2 
@@ -470,9 +489,11 @@ tags:
 20 
 21 db_session.close()
 ```
+{% endraw %}
 
 3.4.更新数据
 
+{% raw %}
 ```
  1 from my_ForeignKey import Student, ClassTable,engine
  2 
@@ -487,9 +508,11 @@ tags:
 11 
 12 db_session.close()
 ```
+{% endraw %}
 
 3.5.删除数据
 
+{% raw %}
 ```
  1 from my_ForeignKey import Student, ClassTable,engine
  2 
@@ -504,11 +527,13 @@ tags:
 11 
 12 db_session.close()
 ```
+{% endraw %}
 
 ### 4.多对多 : ManyToMany
 
 4.1.创建表及关系
 
+{% raw %}
 ```
  1 from sqlalchemy.ext.declarative import declarative_base
  2 
@@ -543,9 +568,11 @@ tags:
 31 
 32 Base.metadata.create_all(engine)
 ```
+{% endraw %}
 
 4.2.基于relationship增加数据
 
+{% raw %}
 ```
  1 from my_M2M import Girl,Boy,Hotel,engine
  2 
@@ -567,9 +594,11 @@ tags:
 18 db_session.add(girl)
 19 db_session.commit()
 ```
+{% endraw %}
 
 4.3.基于relationship查询数据
 
+{% raw %}
 ```
  1 from my_M2M import Girl,Boy,Hotel,engine
  2 
@@ -591,3 +620,4 @@ tags:
 18     for row2 in row.boys:
 19         print(row.name,row2.name)
 ```
+{% endraw %}

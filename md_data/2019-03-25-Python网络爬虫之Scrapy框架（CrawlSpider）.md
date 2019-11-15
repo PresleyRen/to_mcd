@@ -4,7 +4,7 @@ title:      Python网络爬虫之Scrapy框架（CrawlSpider）
 subtitle:   
 date:       2019-03-25
 author:     P
-header-img: img/post-bg-kuaidi.jpg
+header-img: img/post-bg-android.jpg
 catalog: true
 tags:
     - python
@@ -42,6 +42,7 @@ tags:
 
 　　3.观察生成的爬虫文件
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 import scrapy
@@ -65,6 +66,7 @@ class ChoutidemoSpider(CrawlSpider):
         #i['description'] = response.xpath('//div[@id="description"]').extract()
         return i</code>
 ```
+{% endraw %}
 
 　　- 7行：表示该爬虫程序是基于CrawlSpider类的
 
@@ -88,9 +90,11 @@ class ChoutidemoSpider(CrawlSpider):
 
 　　　　　　　　 deny_domains=xxx, # 不会被提取的链接的domains。　
 
+{% raw %}
 ```
 **　　  )**
 ```
+{% endraw %}
 
 　　　　- 作用：提取response中符合规则的链接。
 
@@ -122,6 +126,7 @@ class ChoutidemoSpider(CrawlSpider):
 
 　　4.简单代码实战应用
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 import scrapy
@@ -151,9 +156,11 @@ class CrawldemoSpider(CrawlSpider):
 
 </code>
 ```
+{% endraw %}
 
 　　4.2 爬虫文件：
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 import scrapy
@@ -188,9 +195,11 @@ class QiubaitestSpider(CrawlSpider):
 
             yield item #将item提交至管道</code>
 ```
+{% endraw %}
 
 　　4.2 item文件：
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 
@@ -208,9 +217,11 @@ class QiubaibycrawlItem(scrapy.Item):
     author = scrapy.Field() #作者
     content = scrapy.Field() #内容</code>
 ```
+{% endraw %}
 
 　　4.3 管道文件：
 
+{% raw %}
 ```
 <code class="language-python hljs"># -*- coding: utf-8 -*-
 
@@ -237,3 +248,4 @@ class QiubaibycrawlPipeline(object):
         print('结束爬虫')
         self.fp.close()</code>
 ```
+{% endraw %}

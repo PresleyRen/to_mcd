@@ -67,6 +67,7 @@ https://api.example.com/v1/zoos?animal_type_id=1：指定筛选条件
 
 ### 状态码
 
+{% raw %}
 ```
 200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。
 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。
@@ -81,21 +82,25 @@ https://api.example.com/v1/zoos?animal_type_id=1：指定筛选条件
 422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
 ```
+{% endraw %}
 
 ### 错误处理
 
 状态码是4xx时，应返回错误信息，error当做key。　　　　
 
+{% raw %}
 ```
 {
     error: "Invalid API key"
 }
 ```
+{% endraw %}
 
 ### 返回结果
 
 针对不同操作，服务器向用户返回的结果应该符合以下规范
 
+{% raw %}
 ```
 GET /collection：返回资源对象的列表（数组）
 GET /collection/resource：返回单个资源对象
@@ -104,11 +109,13 @@ PUT /collection/resource：返回完整的资源对象
 PATCH /collection/resource：返回完整的资源对象
 DELETE /collection/resource：返回一个空文档
 ```
+{% endraw %}
 
 ### Hypermedia API
 
 RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。
 
+{% raw %}
 ```
 {"link": {
   "rel":   "collection https://www.example.com/zoos",
@@ -117,3 +124,4 @@ RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其�
   "type":  "application/vnd.yourformat+json"
 }}
 ```
+{% endraw %}

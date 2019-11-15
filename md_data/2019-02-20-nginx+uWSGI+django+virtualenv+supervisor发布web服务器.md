@@ -4,13 +4,14 @@ title:      nginx+uWSGI+django+virtualenv+supervisor发布web服务器
 subtitle:   
 date:       2019-02-20
 author:     P
-header-img: img/post-bg-map.jpg
+header-img: img/post-bg-android.jpg
 catalog: true
 tags:
     - python
 ---
 #  导论
 
+{% raw %}
 ```
 WSGI是Web服务器网关接口。它是一个规范，描述了Web服务器如何与Web应用程序通信，以及Web应用程序如何链接在一起以处理一个请求，（接收请求，处理请求，响应请求）
 基于wsgi运行的框架有bottle,DJango,Flask,用于解析动态HTTP请求
@@ -41,7 +42,9 @@ application
 startproject 命令创建包含这样的 application 可调用的文件 <project_name>/wsgi.py. ，它被Django的开发服务器和生产WSGI部署使用。
 WSGI服务器从其配置中获取 application 可调用的路径。 Django的内置服务器，即 runserver 命令，从 WSGI_APPLICATION 设置读取它。
 ```
+{% endraw %}
 
+{% raw %}
 ```
 1 首先nginx 是对外的服务接口，外部浏览器通过url访问nginx,
 
@@ -57,7 +60,9 @@ WSGI服务器从其配置中获取 application 可调用的路径。 Django的�
 
 3静态文件问题，用django或是uwsgi这种东西来负责静态文件的处理是很浪费的行为，而且他们本身对文件的处理也不如nginx好，所以整个静态文件的处理都直接由nginx完成，静态文件的访问完全不去经过uwsgi以及其后面的东西。
 ```
+{% endraw %}
 
+{% raw %}
 ```
 1.单机启动django项目，性能低，默认使用wsgiref模块，性能低的wsgi协议
 
@@ -185,14 +190,19 @@ https://www.cnblogs.com/pyyu/p/9481344.html
 
 13期课程笔记
 ```
+{% endraw %}
 
+{% raw %}
 ```
 http://nginx.org/en/
 ```
+{% endraw %}
 
+{% raw %}
 ```
 http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html
 ```
+{% endraw %}
 
 大家都学过了django，用django写了各种功能，写了bbs项目，写了路飞学城。
 
@@ -200,25 +210,35 @@ http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html
 
 前面超哥也对nginx简单的介绍了，本文将nginx、WSGI、uwsgi、uWSGI、django这几个关系梳理一下。
 
+{% raw %}
 ```
 wsgi    全称web server gateway interface，wsgi不是服务器，也不是python模块，只是一种协议，描述web server如何和web application通信的规则。运行在wsgi上的web框架有bottle，flask，django
 ```
+{% endraw %}
 
+{% raw %}
 ```
 uwsgi    和wsgi一样是通信协议，是uWSGI服务器的单独协议，用于定义传输信息的类型
 ```
+{% endraw %}
 
+{% raw %}
 ```
 uWSGI    是一个web服务器，实现了WSGI协议，uwsgi协议。a
 ```
+{% endraw %}
 
+{% raw %}
 ```
 nginx    web服务器，更加安全，更好的处理处理静态资源，缓存功能，负载均衡，因此nginx的强劲性能，配合uWSGI服务器会更加安全，性能有保障。
 ```
+{% endraw %}
 
+{% raw %}
 ```
 django 高级的python web框架，用于快速开发，解决web开发的大部分麻烦，程序员可以更专注业务逻辑，无须重新造轮子
 ```
+{% endraw %}
 
 ### 逻辑图
 
@@ -226,20 +246,24 @@ django 高级的python web框架，用于快速开发，解决web开发的大部
 
 web服务器
 
+{% raw %}
 ```
 传统的c/s架构，请求的过程是
 客户端 > 服务器 
 服务器 > 客户端
 服务器就是：1.接收请求 2.处理请求 3.返回响应
 ```
+{% endraw %}
 
 web框架层
 
+{% raw %}
 ```
 HTTP的动态数据交给web框架，例如django遵循MTV模式处理请求。
 HTTp协议使用url定位资源，urls.py将路由请求交给views视图处理，然后返回一个结果，完成一次请求。
 web框架使用者只需要处理业务的逻辑即可。
 ```
+{% endraw %}
 
 如果将一次通信转化为对话的过程
 
@@ -261,39 +285,50 @@ WSGI：太棒了，nginx，响应结果请收好，已经按照要求传递给�
 
 #### 基础开发环境配置
 
+{% raw %}
 ```
 yum groupinstall "Development tools"
 yum install zlib-devel bzip2-devel pcre-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel
 ```
+{% endraw %}
 
 #### 提前安装好python3环境
 
+{% raw %}
 ```
 https://www.cnblogs.com/pyyu/p/7402145.html
 ```
+{% endraw %}
 
 #### virtualenv
 
+{% raw %}
 ```
 请确保你的虚拟环境正常工作https://www.cnblogs.com/pyyu/p/9015317.html
 ```
+{% endraw %}
 
 #### 安装django1.11
 
+{% raw %}
 ```
 pip3 install django==1.11#创建django项目mysitedjango-admin startproject mysite#创建app01python3 manage.py startapp app01
 ```
+{% endraw %}
 
 mysite/settings.py
 
+{% raw %}
 ```
 #settings.py设置
 ALLOWED_HOSTS = ['*']
 install app01
 ```
+{% endraw %}
 
 mysite/urls.py
 
+{% raw %}
 ```
 from app01 import views
 urlpatterns = [
@@ -301,9 +336,11 @@ urlpatterns = [
     url(r'^hello_django/', views.hello),
 ]
 ```
+{% endraw %}
 
 app01/views.py
 
+{% raw %}
 ```
 from django.shortcuts import render,HttpResponse
 
@@ -312,52 +349,66 @@ def hello(request):
     print('request is :',request)
     return HttpResponse('django is ok ')
 ```
+{% endraw %}
 
 #### 安装uWSGI
 
+{% raw %}
 ```
 进入虚拟环境venv，安装uwsgi
 (venv) [root@slave 192.168.11.64 /opt]$pip3 install uwsgi检查uwsgi版本(venv) [root@slave 192.168.11.64 /opt]$uwsgi --version2.0.17.1#检查uwsgi python版本uwsgi --python-version
 ```
+{% endraw %}
 
 运行简单的uWSGI
 
+{% raw %}
 ```
 #启动一个python
 uwsgi --http :8000 --wsgi-file test.py
 ```
+{% endraw %}
 
 - `http :8000`: 使用http协议，端口8000
 - `wsgi-file test.py`: 加载指定的文件，test.py
 
+{% raw %}
 ```
 #test.py
 def application(env, start_response):
     start_response('200 OK', [('Content-Type','text/html')])
     return [b"Hello World"] # python3
 ```
+{% endraw %}
 
 uWsgi热加载python程序
 
+{% raw %}
 ```
 在启动命令后面加上参数
 uwsgi --http :8088 --module mysite.wsgi --py-autoreload=1 #发布命令command= /home/venv/bin/uwsgi --uwsgi 0.0.0.0:8000 --chdir /opt/mysite --home=/home/venv --module mysite.wsgi
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #此时修改django代码，uWSGI会自动加载django程序，页面生效
 ```
+{% endraw %}
 
 运行django程序
 
+{% raw %}
 ```
 #mysite/wsgi.py  确保找到这个文件uwsgi --http :8000 --module mysite.wsgi
 ```
+{% endraw %}
 
 - `module mysite.wsgi`: 加载指定的wsgi模块
 
 uwsgi配置文件
 
+{% raw %}
 ```
 uwsgi支持ini、xml等多种配置方式，本文以 ini 为例， 在/etc/目录下新建uwsgi_nginx.ini，添加如下配置：
 
@@ -383,17 +434,21 @@ socket          = 0.0.0.0:8000
 # clear environment on exit
 vacuum          = true
 ```
+{% endraw %}
 
 #### 指定配置文件启动命令
 
+{% raw %}
 ```
 uwsgi --ini  /etc/uwsgi_nginx.ini
 ```
+{% endraw %}
 
 #### 配置nginx结合uWSGI
 
 配置nginx.conf
 
+{% raw %}
 ```
 worker_processes  1;
 error_log  logs/error.log;
@@ -420,11 +475,15 @@ http {
             index  index.html index.htm;
         }　　　　  #nginx处理静态页面资源　　　　  location /static{　　　　　　　　alias /opt/nginx1-12/static;　　　         }　　　　　#nginx处理媒体资源　　　　　location /media{　　　　　　　　alias /opt/nginx1-12/media;　　
 ```
+{% endraw %}
 
+{% raw %}
 ```
 **         }****<em id="__mceDel">        error_page   500 502 503 504  /50x.html;**</em>
 ```
+{% endraw %}
 
+{% raw %}
 ```
 <em id="__mceDel"><em id="__mceDel">        location = /50x.html {
             root   html;
@@ -432,6 +491,7 @@ http {
     }
 }</em></em>
 ```
+{% endraw %}
 
 配置完启动nginx
 
@@ -441,18 +501,23 @@ http {
 
 由于supervisor在python3下无法使用，因此只能用python2去下载！！！！！！
 
+{% raw %}
 ```
 #注意此时已经退出虚拟环境了！！！！！yum install python-setuptoolseasy_install supervisor
 ```
+{% endraw %}
 
 通过命令生成supervisor的配支文件
 
+{% raw %}
 ```
 echo_supervisord_conf > /etc/supervisord.conf
 ```
+{% endraw %}
 
 然后再/etc/supervisord.conf末尾添加上如下代码！！！！！！
 
+{% raw %}
 ```
 supervisord.conf配置文件参数解释
 [program:xx]是被管理的进程配置参数，xx是进程的名称
@@ -472,18 +537,24 @@ stdout_logfile=/opt/apache-tomcat-8.0.35/logs/catalina.out
 stopasgroup=false     ;默认为false,进程被杀死时，是否向这个进程组发送stop信号，包括子进程
 killasgroup=false     ;默认为false，向进程组发送kill信号，包括子进程
 ```
+{% endraw %}
 
+{% raw %}
 ```
 [program:my]
 #command=/opt/venv/bin/uwsgi --ini  /etc/uwsgi_nginx.ini  #这里是结合virtualenv的命令 和supervisor的精髓！！！！command= /home/venv/bin/uwsgi --uwsgi 0.0.0.0:8000 --chdir /opt/mysite --home=/home/venv --module mysite.wsgi#--home指的是虚拟环境目录  --module找到 mysite/wsgi.py   
 ```
+{% endraw %}
 
 最后启动supervisor，完成uWSGI启动django，nginx反向代理
 
+{% raw %}
 ```
 supervisord -c /etc/supervisord.conf #启动supervisorsupervisorctl -c /etxc/supervisord.conf restart my  #重启my项目`supervisorctl -c ``/etc/supervisord``.conf [start|stop|restart] [program-name|all]`
 ```
+{% endraw %}
 
+{% raw %}
 ```
 一、添加好配置文件后
 
@@ -510,11 +581,13 @@ supervisorctl restart program_name
 supervisorctl stop all
 注意：显示用stop停止掉的进程，用reload或者update都不会自动重启。
 ```
+{% endraw %}
 
 #  django的静态文件与nginx配置
 
 mysite/settings.py
 
+{% raw %}
 ```
 STATIC_ROOT='/opt/nginx1-12/static'
 STATIC_URL = '/static/'
@@ -522,15 +595,18 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"static"),
 ]
 ```
+{% endraw %}
 
 上述的参数STATIC_ROOT用在哪？
 
 通过python3 manage.py collectstatic 收集所有你使用的静态文件保存到STATIC_ROOT！
 
+{% raw %}
 ```
 STATIC_ROOT 文件夹 是用来将所有STATICFILES_DIRS中所有文件夹中的文件，以及各app中static中的文件都复制过来
 # 把这些文件放到一起是为了用nginx等部署的时候更方便
 ```
+{% endraw %}
 
 ** **
 

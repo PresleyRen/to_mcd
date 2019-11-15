@@ -4,7 +4,7 @@ title:      Selenium+Webdriver被检测识别出来的应对方案
 subtitle:   
 date:       2019-04-25
 author:     P
-header-img: img/post-bg-kuaidi.jpg
+header-img: img/post-bg-cook.jpg
 catalog: true
 tags:
     - python
@@ -39,6 +39,7 @@ tags:
 
 在启动Chromedriver之前，为Chrome开启实验性功能参数`excludeSwitches`，它的值为`['enable-automation']`，完整代码如下：
 
+{% raw %}
 ```
 <code>
 from selenium.webdriver import Chrome
@@ -48,6 +49,7 @@ option = ChromeOptions()
 option.add_experimental_option('excludeSwitches', ['enable-automation'])
 driver = Chrome(options=option)</code>
 ```
+{% endraw %}
 
 此时启动的Chrome窗口，在右上角会弹出一个提示，不用管它，不要点击`停用`按钮。
 
